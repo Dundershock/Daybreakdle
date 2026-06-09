@@ -72,7 +72,7 @@ body {
   background: #eee;
 }
 
-.incorrect { background-color: #f44336; color: white; }
-.correct { background-color: #4caf50; color: white; }
-.higher { background-color: #ffeb3b; }
-.lower { background-color: #f44336; color: white; }
+.incorrect { border-bottom: solid 3px  #f44336; }
+.correct { border-bottom: solid 3px  #4caf50; }
+.higher { border-bottom: solid 3px #ffeb3b; }
+.lower { border-bottom: solid 3px #ff685d; }
