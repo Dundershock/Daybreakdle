@@ -37,10 +37,10 @@ body {
 
 .row:first-child .cell {
   font-weight: bold;
-  background-color: #242424;
-  color: black;
+  background-color: #e0e0e0;
   color: #242424;
   text-transform: uppercase;
+  border: 0;
 }
 
 .autocomplete-container {
