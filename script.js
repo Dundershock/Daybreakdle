@@ -123,6 +123,7 @@ function updateSuggestions() {
 
   suggestions.appendChild(li);
 });
+}
 
 function clearSuggestions() {
   const suggestions =
