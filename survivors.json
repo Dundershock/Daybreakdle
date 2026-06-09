@@ -492,6 +492,18 @@
     "technique": 2
   },
   {
+    "name": "Yulian Pekarov",
+    "class": "Looper",
+    "speed": 7,
+    "stamina": 8,
+    "stealth": 2,
+    "composure": 4,
+    "repair": 3,
+    "healing": 3,
+    "skill": 1,
+    "technique": 1
+  },
+  {
     "name": "Dakota Nicole",
     "class": "Looper",
     "speed": 8,
