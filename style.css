@@ -129,3 +129,18 @@ body {
 .new-row .cell:nth-child(8)  { animation-delay: 1050ms; }
 .new-row .cell:nth-child(9)  { animation-delay: 1200ms; }
 .new-row .cell:nth-child(10) { animation-delay: 1350ms; }
+
+.footer {
+  position: fixed;
+  bottom: 5px;
+  right: 10px;
+  transition: 250ms cubic-bezier(.4,0,.21,2.09);
+  cursor: pointer;
+}
+.footer img {
+  width: 50px;
+}
+.footer:hover {
+  filter: drop-shadow(0 0 8px #ffffff5e);
+  transform: rotate(9deg)
+}
