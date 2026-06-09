@@ -9,7 +9,8 @@
     "repair": 4,
     "healing": 3,
     "skill": 6,
-    "technique": 9
+    "technique": 9,
+    "image": "NamiFace.png"
   },
   {
     "name": "Adriana Penn",
@@ -21,7 +22,8 @@
     "repair": 6,
     "healing": 6,
     "skill": 5,
-    "technique": 7
+    "technique": 7,
+    "image": "AdrianaFace.png"
   },
   {
     "name": "Arlo Flores",
@@ -33,7 +35,8 @@
     "repair": 6,
     "healing": 10,
     "skill": 5,
-    "technique": 8
+    "technique": 8,
+    "image": "ArloFace.png"
   },
   {
     "name": "Yara Valle",
@@ -45,7 +48,8 @@
     "repair": 3,
     "healing": 3,
     "skill": 3,
-    "technique": 4
+    "technique": 4,
+    "image": "YaraFace.png"
   },
   {
     "name": "Eiji Inagaki",
@@ -57,7 +61,8 @@
     "repair": 4,
     "healing": 3,
     "skill": 5,
-    "technique": 4
+    "technique": 4,
+    "image": "EijiFace.png"
   },
   {
     "name": "Jun Inagaki",
@@ -69,7 +74,8 @@
     "repair": 4,
     "healing": 5,
     "skill": 5,
-    "technique": 9
+    "technique": 9,
+    "image": "JunFace.png"
   },
   {
     "name": "Iris Daley",
@@ -81,7 +87,8 @@
     "repair": 4,
     "healing": 9,
     "skill": 10,
-    "technique": 5
+    "technique": 5,
+    "image": "IrisFace.png"
   },
   {
     "name": "Gabrielle Cole",
@@ -93,7 +100,8 @@
     "repair": 10,
     "healing": 2,
     "skill": 9,
-    "technique": 10
+    "technique": 10,
+    "image": "GabrielleFace.png"
   },
   {
     "name": "Riley West",
@@ -105,7 +113,8 @@
     "repair": 4,
     "healing": 5,
     "skill": 2,
-    "technique": 5
+    "technique": 5,
+    "image": "RileyFace.png"
   },
   {
     "name": "Cora Madden",
@@ -117,7 +126,8 @@
     "repair": 10,
     "healing": 5,
     "skill": 7,
-    "technique": 9
+    "technique": 9,
+    "image": "CoraFace.png"
   },
   {
     "name": "Mamo Ikaika",
@@ -129,7 +139,8 @@
     "repair": 3,
     "healing": 4,
     "skill": 3,
-    "technique": 1
+    "technique": 1,
+    "image": "MamoFace.png"
   },
   {
     "name": "Seoung Kwan",
@@ -141,7 +152,8 @@
     "repair": 7,
     "healing": 10,
     "skill": 7,
-    "technique": 6
+    "technique": 6,
+    "image": "SeoungFace.png"
   },
   {
     "name": "Jack Sato",
@@ -153,7 +165,8 @@
     "repair": 4,
     "healing": 8,
     "skill": 4,
-    "technique": 8
+    "technique": 8,
+    "image": "JackFace.png"
   },
   {
     "name": "Chaoxing Lai",
@@ -165,7 +178,8 @@
     "repair": 4,
     "healing": 7,
     "skill": 5,
-    "technique": 4
+    "technique": 4,
+    "image": "ChaoxingFace.png"
   },
   {
     "name": "Taylor Dalton",
@@ -177,7 +191,8 @@
     "repair": 7,
     "healing": 8,
     "skill": 10,
-    "technique": 7
+    "technique": 7,
+    "image": "TaylorFace.png"
   },
   {
     "name": "Yeona Jeung",
@@ -189,7 +204,8 @@
     "repair": 3,
     "healing": 5,
     "skill": 4,
-    "technique": 2
+    "technique": 2,
+    "image": "YeonaFace.png"
   },
   {
     "name": "Dae-jung Pak",
@@ -201,7 +217,8 @@
     "repair": 3,
     "healing": 10,
     "skill": 5,
-    "technique": 7
+    "technique": 7,
+    "image": "DaejungFace.png"
   },
   {
     "name": "Serena Wolfe",
@@ -213,7 +230,8 @@
     "repair": 4,
     "healing": 6,
     "skill": 2,
-    "technique": 2
+    "technique": 2,
+    "image": "SerenaFace.png"
   },
   {
     "name": "Kyle Wolfe",
@@ -225,7 +243,8 @@
     "repair": 4,
     "healing": 5,
     "skill": 5,
-    "technique": 4
+    "technique": 4,
+    "image": "KyleFace.png"
   },
   {
     "name": "Yan Tian",
@@ -237,7 +256,8 @@
     "repair": 8,
     "healing": 5,
     "skill": 8,
-    "technique": 8
+    "technique": 8,
+    "image": "YanFace.png"
   },
   {
     "name": "Nathan Reyes",
@@ -249,7 +269,8 @@
     "repair": 2,
     "healing": 5,
     "skill": 1,
-    "technique": 1
+    "technique": 1,
+    "image": "NathanFace.png"
   },
   {
     "name": "Elizabeth Payne",
@@ -261,7 +282,8 @@
     "repair": 3,
     "healing": 9,
     "skill": 4,
-    "technique": 7
+    "technique": 7,
+    "image": "ElizabethFace.png"
   },
   {
     "name": "Yvonne Kojo",
@@ -273,7 +295,8 @@
     "repair": 6,
     "healing": 4,
     "skill": 5,
-    "technique": 5
+    "technique": 5,
+    "image": "YvonneFace.png"
   },
   {
     "name": "Lyndon Davenport",
@@ -285,7 +308,8 @@
     "repair": 3,
     "healing": 9,
     "skill": 2,
-    "technique": 3
+    "technique": 3,
+    "image": "LyndonFace.png"
   },
   {
     "name": "Dakari Bowens",
@@ -297,7 +321,8 @@
     "repair": 5,
     "healing": 8,
     "skill": 2,
-    "technique": 2
+    "technique": 2,
+    "image": "DakariFace.png"
   },
   {
     "name": "Becca Prescott",
@@ -309,7 +334,8 @@
     "repair": 4,
     "healing": 3,
     "skill": 2,
-    "technique": 5
+    "technique": 5,
+    "image": "BeccaFace.png"
   },
   {
     "name": "Sarah Lindholm",
@@ -321,7 +347,8 @@
     "repair": 5,
     "healing": 2,
     "skill": 8,
-    "technique": 6
+    "technique": 6,
+    "image": "SarahFace.png"
   },
   {
     "name": "Saadiya Ali",
@@ -333,7 +360,8 @@
     "repair": 3,
     "healing": 3,
     "skill": 2,
-    "technique": 2
+    "technique": 2,
+    "image": "SaadiyaFace.png"
   },
   {
     "name": "Elijah Songaa",
@@ -345,7 +373,8 @@
     "repair": 4,
     "healing": 9,
     "skill": 6,
-    "technique": 4
+    "technique": 4,
+    "image": "ElijahFace.png"
   },
   {
     "name": "Eman Attia",
@@ -357,7 +386,8 @@
     "repair": 4,
     "healing": 2,
     "skill": 2,
-    "technique": 7
+    "technique": 7,
+    "image": "EmanFace.png"
   },
   {
     "name": "Aaaqil Che",
@@ -369,7 +399,8 @@
     "repair": 7,
     "healing": 4,
     "skill": 7,
-    "technique": 10
+    "technique": 10,
+    "image": "AaaqilFace.png"
   },
   {
     "name": "Yronica Ayala",
@@ -381,7 +412,8 @@
     "repair": 4,
     "healing": 5,
     "skill": 6,
-    "technique": 10
+    "technique": 10,
+    "image": "YronicaFace.png"
   },
   {
     "name": "Callum Gallagher",
@@ -393,7 +425,8 @@
     "repair": 3,
     "healing": 10,
     "skill": 2,
-    "technique": 1
+    "technique": 1,
+    "image": "CallumFace.png"
   },
   {
     "name": "Amari Taymiyyah",
@@ -405,7 +438,8 @@
     "repair": 3,
     "healing": 5,
     "skill": 4,
-    "technique": 1
+    "technique": 1,
+    "image": "AmariFace.png"
   },
   {
     "name": "Emery Rivera",
@@ -417,7 +451,8 @@
     "repair": 8,
     "healing": 5,
     "skill": 10,
-    "technique": 9
+    "technique": 9,
+    "image": "EmeryFace.png"
   },
   {
     "name": "Kelvin Mars",
@@ -429,7 +464,8 @@
     "repair": 7,
     "healing": 9,
     "skill": 3,
-    "technique": 4
+    "technique": 4,
+    "image": "KelvinFace.png"
   },
   {
     "name": "Sanjana Dewan",
@@ -441,7 +477,8 @@
     "repair": 4,
     "healing": 10,
     "skill": 7,
-    "technique": 4
+    "technique": 4,
+    "image": "SanjanaFace.png"
   },
   {
     "name": "Gavin Prescott",
@@ -453,7 +490,8 @@
     "repair": 7,
     "healing": 4,
     "skill": 6,
-    "technique": 7
+    "technique": 7,
+    "image": "GavinFace.png"
   },
   {
     "name": "Parker Kaplan",
@@ -465,7 +503,8 @@
     "repair": 8,
     "healing": 7,
     "skill": 6,
-    "technique": 5
+    "technique": 5,
+    "image": "ParkerFace.png"
   },
   {
     "name": "Crosby Aldrich",
@@ -477,7 +516,8 @@
     "repair": 9,
     "healing": 4,
     "skill": 9,
-    "technique": 8
+    "technique": 8,
+    "image": "CrosbyFace.png"
   },
   {
     "name": "Rayner Byrne",
@@ -489,7 +529,8 @@
     "repair": 3,
     "healing": 5,
     "skill": 1,
-    "technique": 2
+    "technique": 2,
+    "image": "RaynerFace.png"
   },
   {
     "name": "Yulian Pekarov",
@@ -501,7 +542,8 @@
     "repair": 3,
     "healing": 3,
     "skill": 1,
-    "technique": 1
+    "technique": 1,
+    "image": "YulianFace.png"
   },
   {
     "name": "Dakota Nicole",
@@ -513,7 +555,8 @@
     "repair": 3,
     "healing": 4,
     "skill": 3,
-    "technique": 7
+    "technique": 7,
+    "image": "DakotaFace.png"
   },
   {
     "name": "Ryder Parikh",
@@ -525,7 +568,8 @@
     "repair": 4,
     "healing": 5,
     "skill": 6,
-    "technique": 4
+    "technique": 4,
+    "image": "RyderFace.png"
   },
   {
     "name": "Makoto Shizuka",
@@ -537,7 +581,8 @@
     "repair": 8,
     "healing": 5,
     "skill": 10,
-    "technique": 10
+    "technique": 10,
+    "image": "MakotoFace.png"
   },
   {
     "name": "Crystal Kaur",
@@ -549,7 +594,8 @@
     "repair": 7,
     "healing": 5,
     "skill": 6,
-    "technique": 5
+    "technique": 5,
+    "image": "CrystalFace.png"
   },
   {
     "name": "Emil Singh",
@@ -561,7 +607,8 @@
     "repair": 3,
     "healing": 10,
     "skill": 3,
-    "technique": 4
+    "technique": 4,
+    "image": "EmilFace.png"
   },
   {
     "name": "Jonas Weber",
@@ -573,7 +620,8 @@
     "repair": 3,
     "healing": 2,
     "skill": 2,
-    "technique": 3
+    "technique": 3,
+    "image": "JonasFace.png"
   },
   {
     "name": "Kiara Cruz",
@@ -585,7 +633,8 @@
     "repair": 6,
     "healing": 6,
     "skill": 7,
-    "technique": 8
+    "technique": 8,
+    "image": "KiaraFace.png"
   },
   {
     "name": "Anais Desir",
@@ -597,7 +646,8 @@
     "repair": 8,
     "healing": 5,
     "skill": 7,
-    "technique": 9
+    "technique": 9,
+    "image": "AnaisFace.png"
   },
   {
     "name": "Wren Harris",
@@ -609,7 +659,8 @@
     "repair": 7,
     "healing": 5,
     "skill": 5,
-    "technique": 10
+    "technique": 10,
+    "image": "WrenFace.png"
   },
   {
     "name": "Tabitha Harris",
@@ -621,7 +672,8 @@
     "repair": 4,
     "healing": 10,
     "skill": 6,
-    "technique": 4
+    "technique": 4,
+    "image": "TabithaFace.png"
   },
   {
     "name": "Dante Fontana-Rosa",
@@ -633,7 +685,8 @@
     "repair": 6,
     "healing": 9,
     "skill": 7,
-    "technique": 2
+    "technique": 2,
+    "image": "DanteFace.png"
   },
   {
     "name": "Evelyn Maurelle",
@@ -645,7 +698,8 @@
     "repair": 7,
     "healing": 10,
     "skill": 10,
-    "technique": 7
+    "technique": 7,
+    "image": "EvelynFace.png"
   },
   {
     "name": "Dhanya Choudhary",
@@ -657,7 +711,8 @@
     "repair": 8,
     "healing": 3,
     "skill": 8,
-    "technique": 8
+    "technique": 8,
+    "image": "DhanyaFace.png"
   },
   {
     "name": "Millicent Hurley",
@@ -669,7 +724,8 @@
     "repair": 9,
     "healing": 7,
     "skill": 8,
-    "technique": 5
+    "technique": 5,
+    "image": "MillicentFace.png"
   },
   {
     "name": "Ted Ainsley",
@@ -681,7 +737,8 @@
     "repair": 9,
     "healing": 10,
     "skill": 5,
-    "technique": 7
+    "technique": 7,
+    "image": "TedFace.png"
   },
   {
     "name": "Diego",
@@ -693,7 +750,8 @@
     "repair": 4,
     "healing": 4,
     "skill": 1,
-    "technique": 2
+    "technique": 2,
+    "image": "DiegoFace.png"
   },
   {
     "name": "Ana Acosta",
@@ -705,7 +763,8 @@
     "repair": 3,
     "healing": 4,
     "skill": 5,
-    "technique": 3
+    "technique": 3,
+    "image": "TempusFace.png"
   },
   {
     "name": "Joel Acosta",
@@ -717,7 +776,8 @@
     "repair": 7,
     "healing": 4,
     "skill": 4,
-    "technique": 7
+    "technique": 7,
+    "image": "ZealFace.png"
   },
   {
     "name": "Rajani Tapadia",
@@ -729,7 +789,8 @@
     "repair": 5,
     "healing": 9,
     "skill": 6,
-    "technique": 2
+    "technique": 2,
+    "image": "BarrettFace.png"
   },
   {
     "name": "Santino Herrera",
@@ -741,7 +802,8 @@
     "repair": 3,
     "healing": 3,
     "skill": 4,
-    "technique": 3
+    "technique": 3,
+    "image": "SantinoFace.png"
   },
   {
     "name": "Kamaria Tull & Narantuya",
@@ -753,7 +815,8 @@
     "repair": 8,
     "healing": 4,
     "skill": 7,
-    "technique": 10
+    "technique": 10,
+    "image": "KamariaNarantuyaFace.png"
   },
   {
     "name": "Javier Rosario",
@@ -765,7 +828,8 @@
     "repair": 6,
     "healing": 5,
     "skill": 6,
-    "technique": 7
+    "technique": 7,
+    "image": "JavierFace.png"
   },
   {
     "name": "Carmelita Vargas",
@@ -777,7 +841,8 @@
     "repair": 8,
     "healing": 4,
     "skill": 10,
-    "technique": 9
+    "technique": 9,
+    "image": "CarmelitaFace.png"
   },
   {
     "name": "Angelo Navarro",
@@ -789,7 +854,8 @@
     "repair": 3,
     "healing": 4,
     "skill": 7,
-    "technique": 7
+    "technique": 7,
+    "image": "AngeloFace.png"
   },
   {
     "name": "Mavis Bouncer",
@@ -801,7 +867,8 @@
     "repair": 8,
     "healing": 6,
     "skill": 8,
-    "technique": 9
+    "technique": 9,
+    "image": "MavisFace.png"
   },
   {
     "name": "Dobromir Radoslavov",
@@ -813,7 +880,8 @@
     "repair": 3,
     "healing": 8,
     "skill": 4,
-    "technique": 2
+    "technique": 2,
+    "image": "DobromirFace.png"
   },
   {
     "name": "Johannah Villamor",
@@ -825,7 +893,8 @@
     "repair": 5,
     "healing": 10,
     "skill": 8,
-    "technique": 7
+    "technique": 7,
+    "image": "JohannahFace.png"
   },
   {
     "name": "Kade Pereira",
@@ -837,7 +906,8 @@
     "repair": 8,
     "healing": 3,
     "skill": 8,
-    "technique": 9
+    "technique": 9,
+    "image": "KadeFace.png"
   },
   {
     "name": "Lisa Ngome",
@@ -849,7 +919,8 @@
     "repair": 7,
     "healing": 9,
     "skill": 8,
-    "technique": 8
+    "technique": 8,
+    "image": "LisaFace.png"
   },
   {
     "name": "Cameron Rhodes",
@@ -861,7 +932,8 @@
     "repair": 2,
     "healing": 10,
     "skill": 4,
-    "technique": 2
+    "technique": 2,
+    "image": "CameronFace.png"
   },
   {
     "name": "Rene Serrano",
@@ -873,7 +945,8 @@
     "repair": 5,
     "healing": 9,
     "skill": 8,
-    "technique": 4
+    "technique": 4,
+    "image": "ReneFace.png"
   },
   {
     "name": "Petunia Leon",
@@ -885,7 +958,8 @@
     "repair": 7,
     "healing": 4,
     "skill": 10,
-    "technique": 5
+    "technique": 5,
+    "image": "PetuniaFace.png"
   },
   {
     "name": "Rosalia Gonzalez",
@@ -897,7 +971,8 @@
     "repair": 8,
     "healing": 2,
     "skill": 8,
-    "technique": 9
+    "technique": 9,
+    "image": "RosaliaFace.png"
   },
   {
     "name": "Tancrede Lacoursiere",
@@ -909,7 +984,8 @@
     "repair": 2,
     "healing": 10,
     "skill": 4,
-    "technique": 3
+    "technique": 3,
+    "image": "TancredeFace.png"
   },
   {
     "name": "Yordanis Cardenas",
@@ -921,6 +997,7 @@
     "repair": 4,
     "healing": 8,
     "skill": 5,
-    "technique": 4
+    "technique": 4,
+    "image": "YordanisFace.png"
   }
 ]
