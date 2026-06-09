@@ -1,6 +1,7 @@
 body {
   font-family: 'Oswald', sans-serif;
   text-align: center;
+  color: white;
   margin-top: 20px;
   height: 100vh;
   background-image: url('assets/images/ClearwaterBackground.jpg');
@@ -36,6 +37,7 @@ body {
 .row:first-child .cell {
   font-weight: bold;
   background-color: #e0e0e0;
+  color: black;
 }
 
 .autocomplete-container {
@@ -45,6 +47,7 @@ body {
 }
 
 #guess-input {
+  color: white;
   width: 100%;
   box-sizing: border-box;
   background: linear-gradient(transparent, #0000001f);
