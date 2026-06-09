@@ -859,7 +859,7 @@
   },
   {
     "name": "Mavis Bouncer",
-    "class": "Looper",
+    "class": "Stealth",
     "speed": 7,
     "stamina": 5,
     "stealth": 3,
