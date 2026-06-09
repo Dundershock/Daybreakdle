@@ -13,7 +13,7 @@ const stats = [
   "technique"
 ];
 
-const categories = ["Class"];
+const categories = ["class"];
 
 async function loadData() {
   try {
