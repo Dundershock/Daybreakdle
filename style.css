@@ -39,14 +39,13 @@ body {
   padding: 10px;
   margin: 2px;
   border-bottom: 3px solid #ccc;
-  background: #0006;
-  backdrop-filter: blur(2px);
+  background: linear-gradient(transparent, #000000c4);
   font-size: 14px;
 }
 
 .row:first-child .cell {
   font-weight: bold;
-  background-color: #e0e0e0;
+  background: #e0e0e0;
   color: #242424;
   text-transform: uppercase;
   border: 0;
@@ -115,6 +114,18 @@ body {
   }
 }
 
-.new-row {
-  animation: fadeInRow 150ms ease-out;
+.new-row .cell {
+  opacity: 0;
+  animation: fadeInRow 0.5s ease forwards;
 }
+
+.new-row .cell:nth-child(1)  { animation-delay: 0ms; }
+.new-row .cell:nth-child(2)  { animation-delay: 150ms; }
+.new-row .cell:nth-child(3)  { animation-delay: 300ms; }
+.new-row .cell:nth-child(4)  { animation-delay: 450ms; }
+.new-row .cell:nth-child(5)  { animation-delay: 600ms; }
+.new-row .cell:nth-child(6)  { animation-delay: 750ms; }
+.new-row .cell:nth-child(7)  { animation-delay: 900ms; }
+.new-row .cell:nth-child(8)  { animation-delay: 1050ms; }
+.new-row .cell:nth-child(9)  { animation-delay: 1200ms; }
+.new-row .cell:nth-child(10) { animation-delay: 1350ms; }
