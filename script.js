@@ -1,67 +1,165 @@
 let survivors = [];
 let targetSurvivor = null;
 
-// Load JSON data
-fetch('survivors.json')
-  .then(res => res.json())
-  .then(data => {
-    survivors = data;
-    targetSurvivor = survivors[Math.floor(Math.random() * survivors.length)];
-    populateDatalist();
-  });
+const stats = [
+  "strength",
+  "speed",
+  "stamina",
+  "luck",
+  "defense",
+  "agility",
+  "intelligence",
+  "charisma"
+];
 
-// Populate autocomplete
+async function loadData() {
+  try {
+    const response = await fetch("survivors.json");
+    survivors = await response.json();
+
+    if (!survivors.length) {
+      throw new Error("No survivors found.");
+    }
+
+    // Random target for testing
+    targetSurvivor =
+      survivors[Math.floor(Math.random() * survivors.length)];
+
+    console.log("Target Survivor:", targetSurvivor.name);
+
+    populateDatalist();
+    createHeader();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to load survivor data.");
+  }
+}
+
 function populateDatalist() {
-  const datalist = document.getElementById('survivor-list');
-  survivors.forEach(s => {
-    const option = document.createElement('option');
-    option.value = s.name;
+  const datalist = document.getElementById("survivor-list");
+  datalist.innerHTML = "";
+
+  survivors.forEach((survivor) => {
+    const option = document.createElement("option");
+    option.value = survivor.name;
     datalist.appendChild(option);
   });
 }
 
-// Compare guess
+function createHeader() {
+  const board = document.getElementById("board");
+
+  const header = document.createElement("div");
+  header.className = "row";
+
+  const nameCell = document.createElement("div");
+  nameCell.className = "cell";
+  nameCell.textContent = "Name";
+  header.appendChild(nameCell);
+
+  stats.forEach((stat) => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.textContent =
+      stat.charAt(0).toUpperCase() + stat.slice(1);
+    header.appendChild(cell);
+  });
+
+  board.appendChild(header);
+}
+
+function normalizeName(name) {
+  return name.toLowerCase().trim();
+}
+
+function findSurvivor(name) {
+  return survivors.find(
+    survivor =>
+      normalizeName(survivor.name) === normalizeName(name)
+  );
+}
+
+function makeComparisonCell(guessValue, targetValue) {
+  const cell = document.createElement("div");
+  cell.className = "cell";
+
+  if (guessValue === targetValue) {
+    cell.classList.add("correct");
+    cell.textContent = `${guessValue} ✓`;
+  } else if (guessValue < targetValue) {
+    cell.classList.add("higher");
+    cell.textContent = `${guessValue} ▲`;
+  } else {
+    cell.classList.add("lower");
+    cell.textContent = `${guessValue} ▼`;
+  }
+
+  return cell;
+}
+
 function checkGuess(guessName) {
-  const guess = survivors.find(s => s.name.toLowerCase() === guessName.toLowerCase());
+  const guess = findSurvivor(guessName);
+
   if (!guess) {
-    alert('Survivor not found!');
+    alert("Survivor not found.");
     return;
   }
 
-  const stats = ["strength","speed","stamina","luck","defense","agility","intelligence","charisma"];
-  const row = document.createElement('div');
-  row.className = 'row';
+  const board = document.getElementById("board");
+  const row = document.createElement("div");
+  row.className = "row";
 
-  stats.forEach(stat => {
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    const guessedValue = guess[stat];
+  const nameCell = document.createElement("div");
+  nameCell.className = "cell";
+  nameCell.textContent = guess.name;
+  row.appendChild(nameCell);
+
+  let allCorrect = true;
+
+  stats.forEach((stat) => {
+    const guessValue = guess[stat];
     const targetValue = targetSurvivor[stat];
 
-    cell.textContent = guessedValue;
-
-    if (guessedValue === targetValue) {
-      cell.classList.add('correct');
-    } else if (guessedValue < targetValue) {
-      cell.classList.add('higher');
-      cell.textContent += ' ▲';
-    } else {
-      cell.classList.add('lower');
-      cell.textContent += ' ▼';
+    if (guessValue !== targetValue) {
+      allCorrect = false;
     }
 
-    row.appendChild(cell);
+    row.appendChild(
+      makeComparisonCell(guessValue, targetValue)
+    );
   });
 
-  document.getElementById('board').appendChild(row);
+  board.appendChild(row);
+
+  if (allCorrect) {
+    setTimeout(() => {
+      alert(`🎉 Correct! The survivor was ${targetSurvivor.name}!`);
+    }, 100);
+  }
 }
 
-// Event listener
-document.getElementById('guess-btn').addEventListener('click', () => {
-  const input = document.getElementById('guess-input');
-  const guess = input.value.trim();
-  if (guess) {
-    checkGuess(guess);
-    input.value = '';
+function submitGuess() {
+  const input = document.getElementById("guess-input");
+  const guessName = input.value;
+
+  if (!guessName.trim()) {
+    return;
   }
-});
+
+  checkGuess(guessName);
+  input.value = "";
+}
+
+document
+  .getElementById("guess-btn")
+  .addEventListener("click", submitGuess);
+
+document
+  .getElementById("guess-input")
+  .addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      submitGuess();
+    }
+  });
+
+loadData();
