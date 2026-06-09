@@ -1,6 +1,7 @@
 [
   {
     "name": "John Daybreak",
+    "category": "Stealth",
     "speed": 5,
     "stamina": 7,
     "stealth": 6,
@@ -12,6 +13,7 @@
   },
   {
     "name": "Jane Daybreak",
+    "category": "Looper",
     "speed": 10,
     "stamina": 10,
     "stealth": 6,
@@ -20,5 +22,17 @@
     "healing": 2,
     "skill": 1,
     "technique": 1
+  },
+  {
+    "name": "Adriana Penn",
+    "category": "Stealth",
+    "speed": 8,
+    "stamina": 6,
+    "stealth": 9,
+    "composure": 6,
+    "repair": 6,
+    "healing": 6,
+    "skill": 5,
+    "technique": 7
   }
 ]
