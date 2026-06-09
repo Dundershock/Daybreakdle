@@ -1,5 +1,6 @@
 let survivors = [];
 let targetSurvivor = null;
+let gameOver = false;
 
 const stats = [
   "speed",
@@ -11,6 +12,8 @@ const stats = [
   "skill",
   "technique"
 ];
+
+const categories = ["Class"];
 
 async function loadData() {
   try {
@@ -131,7 +134,27 @@ function checkGuess(guessName) {
 
   board.appendChild(row);
 
+  categories.forEach((cat) => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+  
+    const guessedValue = guess[cat];
+    const targetValue = targetSurvivor[cat];
+  
+    if (guessedValue === targetValue) {
+      cell.classList.add("correct");
+      cell.textContent = guessedValue + " ✓";
+    } else {
+      cell.classList.add("incorrect");
+      cell.textContent = guessedValue + " ✗";
+      allCorrect = false; // still counts towards win
+    }
+  
+    row.appendChild(cell);
+  });
+  
   if (allCorrect) {
+    gameOver = true;
     setTimeout(() => {
       alert(`🎉 Correct! The survivor was ${targetSurvivor.name}!`);
     }, 100);
@@ -139,12 +162,12 @@ function checkGuess(guessName) {
 }
 
 function submitGuess() {
+  if (gameOver) return; // disable input after win
+
   const input = document.getElementById("guess-input");
   const guessName = input.value;
 
-  if (!guessName.trim()) {
-    return;
-  }
+  if (!guessName.trim()) return;
 
   checkGuess(guessName);
   input.value = "";
