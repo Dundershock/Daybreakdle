@@ -10,6 +10,10 @@ body {
   background-attachment: fixed;
 }
 
+#logo {
+  width: 350px
+}
+
 #board {
   margin-top: 20px;
 }
@@ -21,11 +25,11 @@ body {
 }
 
 .cell {
+  color: white;
   min-width: 90px;
   padding: 10px;
   margin: 2px;
   border: 1px solid #ccc;
-  border-radius: 5px;
   font-size: 14px;
 }
 
