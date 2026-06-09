@@ -15,6 +15,11 @@ const stats = [
 
 const categories = ["class"];
 
+const columns = [
+  ...stats.map(stat => ({ key: stat, type: "stat" })),
+  ...categories.map(cat => ({ key: cat, type: "category" }))
+];
+
 const guessedNames = new Set();
 
 async function loadData() {
@@ -32,7 +37,6 @@ async function loadData() {
 
     console.log("Target Survivor:", targetSurvivor.name);
 
-    populateDatalist();
     createHeader();
   } catch (error) {
     console.error(error);
@@ -40,19 +44,8 @@ async function loadData() {
   }
 }
 
-function formatLabel(key) {
-  return key.charAt(0).toUpperCase() + key.slice(1);
-}
-
-function populateDatalist() {
-  const datalist = document.getElementById("survivor-list");
-  datalist.innerHTML = "";
-
-  survivors.forEach((survivor) => {
-    const option = document.createElement("option");
-    option.value = survivor.name;
-    datalist.appendChild(option);
-  });
+function formatLabel(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 function createHeader() {
@@ -87,22 +80,48 @@ function findSurvivor(name) {
   );
 }
 
-function makeComparisonCell(guessValue, targetValue) {
-  const cell = document.createElement("div");
-  cell.className = "cell";
+function updateSuggestions() {
+  const input =
+    document.getElementById("guess-input").value.toLowerCase();
 
-  if (guessValue === targetValue) {
-    cell.classList.add("correct");
-    cell.textContent = `${guessValue} ✓`;
-  } else if (guessValue < targetValue) {
-    cell.classList.add("higher");
-    cell.textContent = `${guessValue} ▲`;
-  } else {
-    cell.classList.add("lower");
-    cell.textContent = `${guessValue} ▼`;
+  const suggestions =
+    document.getElementById("suggestions");
+
+  suggestions.innerHTML = "";
+
+  if (!input) return;
+
+  const matches = survivors.filter(
+    survivor =>
+      survivor.name.toLowerCase().includes(input) &&
+      !guessedNames.has(
+        survivor.name.toLowerCase()
+      )
+  );
+
+  matches.forEach((survivor) => {
+    const li = document.createElement("li");
+
+    li.textContent = survivor.name;
+
+    li.addEventListener("click", () => {
+      document.getElementById("guess-input").value =
+        survivor.name;
+
+      suggestions.innerHTML = "";
+    });
+
+    suggestions.appendChild(li);
+  });
+}
+
+function clearSuggestions() {
+  const suggestions =
+    document.getElementById("suggestions");
+
+  if (suggestions) {
+    suggestions.innerHTML = "";
   }
-
-  return cell;
 }
 
 function checkGuess(guessName) {
@@ -110,6 +129,15 @@ function checkGuess(guessName) {
 
   if (!guess) {
     alert("Survivor not found.");
+    return;
+  }
+
+  // Silently ignore duplicate guesses
+  if (
+    guessedNames.has(
+      guess.name.toLowerCase()
+    )
+  ) {
     return;
   }
 
@@ -158,26 +186,40 @@ function checkGuess(guessName) {
     row.appendChild(cell);
   });
 
+  guessedNames.add(
+    guess.name.toLowerCase()
+  );
+
   board.appendChild(row);
+
+  updateSuggestions();
 
   if (allCorrect) {
     gameOver = true;
+
     setTimeout(() => {
-      alert(`🎉 Correct! The survivor was ${targetSurvivor.name}!`);
+      alert(
+        `🎉 Correct! The survivor was ${targetSurvivor.name}!`
+      );
     }, 100);
   }
 }
 
 function submitGuess() {
-  if (gameOver) return; // disable input after win
+  if (gameOver) return;
 
-  const input = document.getElementById("guess-input");
+  const input =
+    document.getElementById("guess-input");
+
   const guessName = input.value;
 
   if (!guessName.trim()) return;
 
   checkGuess(guessName);
+
   input.value = "";
+
+  clearSuggestions();
 }
 
 document
@@ -190,6 +232,20 @@ document
     if (event.key === "Enter") {
       submitGuess();
     }
+  });
+
+document
+  .getElementById("guess-input")
+  .addEventListener("input", updateSuggestions);
+
+document
+  .getElementById("guess-input")
+  .addEventListener("focus", updateSuggestions);
+
+document
+  .getElementById("guess-input")
+  .addEventListener("blur", () => {
+    setTimeout(clearSuggestions, 150);
   });
 
 loadData();
