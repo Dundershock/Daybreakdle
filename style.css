@@ -37,6 +37,10 @@ body {
 #guess-input {
   width: 100%;
   box-sizing: border-box;
+  background: linear-gradient(transparent, #0000001f);
+  height: 30px;
+  border: none;
+  border-bottom: 2px solid #FD4040;
 }
 
 #suggestions {
