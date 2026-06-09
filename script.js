@@ -15,6 +15,8 @@ const stats = [
 
 const categories = ["class"];
 
+const guessedNames = new Set();
+
 async function loadData() {
   try {
     const response = await fetch("survivors.json");
@@ -36,6 +38,10 @@ async function loadData() {
     console.error(error);
     alert("Failed to load survivor data.");
   }
+}
+
+function formatLabel(key) {
+  return key.charAt(0).toUpperCase() + key.slice(1);
 }
 
 function populateDatalist() {
@@ -60,18 +66,10 @@ function createHeader() {
   nameCell.textContent = "Name";
   header.appendChild(nameCell);
 
-  stats.forEach((stat) => {
+  columns.forEach(({ key }) => {
     const cell = document.createElement("div");
     cell.className = "cell";
-    cell.textContent =
-      stat.charAt(0).toUpperCase() + stat.slice(1);
-    header.appendChild(cell);
-  });
-
-  categories.forEach((cat) => {
-    const cell = document.createElement("div");
-    cell.className = "cell";
-    cell.textContent = cat;
+    cell.textContent = formatLabel(key);
     header.appendChild(cell);
   });
 
@@ -126,40 +124,42 @@ function checkGuess(guessName) {
 
   let allCorrect = true;
 
-  stats.forEach((stat) => {
-    const guessValue = guess[stat];
-    const targetValue = targetSurvivor[stat];
+  columns.forEach(({ key, type }) => {
+    const guessValue = guess[key];
+    const targetValue = targetSurvivor[key];
 
-    if (guessValue !== targetValue) {
-      allCorrect = false;
+    const cell = document.createElement("div");
+    cell.className = "cell";
+
+    if (type === "stat") {
+      if (guessValue === targetValue) {
+        cell.classList.add("correct");
+        cell.textContent = `${guessValue} ✓`;
+      } else if (guessValue < targetValue) {
+        cell.classList.add("higher");
+        cell.textContent = `${guessValue} ▲`;
+        allCorrect = false;
+      } else {
+        cell.classList.add("lower");
+        cell.textContent = `${guessValue} ▼`;
+        allCorrect = false;
+      }
+    } else {
+      if (guessValue === targetValue) {
+        cell.classList.add("correct");
+        cell.textContent = `${formatLabel(guessValue)} ✓`;
+      } else {
+        cell.classList.add("incorrect");
+        cell.textContent = `${formatLabel(guessValue)} ✗`;
+        allCorrect = false;
+      }
     }
 
-    row.appendChild(
-      makeComparisonCell(guessValue, targetValue)
-    );
+    row.appendChild(cell);
   });
 
   board.appendChild(row);
 
-  categories.forEach((cat) => {
-    const cell = document.createElement("div");
-    cell.className = "cell";
-  
-    const guessedValue = guess[cat];
-    const targetValue = targetSurvivor[cat];
-  
-    if (guessedValue === targetValue) {
-      cell.classList.add("correct");
-      cell.textContent = guessedValue + " ✓";
-    } else {
-      cell.classList.add("incorrect");
-      cell.textContent = guessedValue + " ✗";
-      allCorrect = false;
-    }
-  
-    row.appendChild(cell);
-  });
-  
   if (allCorrect) {
     gameOver = true;
     setTimeout(() => {
