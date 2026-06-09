@@ -144,6 +144,7 @@ function checkGuess(guessName) {
   const board = document.getElementById("board");
   const row = document.createElement("div");
   row.className = "row";
+  row.classList.add("new-row");
 
   const nameCell = document.createElement("div");
   nameCell.className = "cell";
@@ -190,7 +191,13 @@ function checkGuess(guessName) {
     guess.name.toLowerCase()
   );
 
-  board.appendChild(row);
+  const header = board.firstElementChild;
+
+  if (header && header.nextSibling) {
+    board.insertBefore(row, header.nextSibling);
+  } else {
+    board.appendChild(row);
+  }
 
   updateSuggestions();
 
