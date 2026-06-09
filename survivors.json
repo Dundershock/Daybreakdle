@@ -238,7 +238,7 @@
     "healing": 5,
     "skill": 8,
     "technique": 8
-  }
+  },
   {
     "name": "Nathan Reyes",
     "class": "Looper",
@@ -358,7 +358,7 @@
     "healing": 2,
     "skill": 2,
     "technique": 7
-  }
+  },
   {
     "name": "Aaaqil Che",
     "class": "Genrusher",
@@ -478,7 +478,7 @@
     "healing": 4,
     "skill": 9,
     "technique": 8
-  }
+  },
   {
     "name": "Rayner Byrne",
     "class": "Looper",
@@ -598,7 +598,7 @@
     "healing": 5,
     "skill": 5,
     "technique": 10
-  }
+  },
   {
     "name": "Tabitha Harris",
     "class": "Support",
@@ -718,7 +718,7 @@
     "healing": 9,
     "skill": 6,
     "technique": 2
-  }
+  },
   {
     "name": "Santino Herrera",
     "class": "Looper",
@@ -838,7 +838,7 @@
     "healing": 9,
     "skill": 8,
     "technique": 8
-  }
+  },
   {
     "name": "Cameron Rhodes",
     "class": "Support",
