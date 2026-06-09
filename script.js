@@ -100,20 +100,29 @@ function updateSuggestions() {
   );
 
   matches.forEach((survivor) => {
-    const li = document.createElement("li");
+  const li = document.createElement("li");
+  li.className = "suggestion-item";
 
-    li.textContent = survivor.name;
+  const img = document.createElement("img");
+  img.src = survivor.image;
+  img.alt = survivor.name;
+  img.className = "suggestion-image";
 
-    li.addEventListener("click", () => {
-      document.getElementById("guess-input").value =
-        survivor.name;
+  const span = document.createElement("span");
+  span.textContent = survivor.name;
 
-      suggestions.innerHTML = "";
-    });
+  li.appendChild(img);
+  li.appendChild(span);
 
-    suggestions.appendChild(li);
+  li.addEventListener("click", () => {
+    document.getElementById("guess-input").value =
+      survivor.name;
+
+    suggestions.innerHTML = "";
   });
-}
+
+  suggestions.appendChild(li);
+});
 
 function clearSuggestions() {
   const suggestions =
