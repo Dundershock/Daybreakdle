@@ -18,11 +18,14 @@ body {
   margin: auto;
   margin-top: 20px;
   max-width: 1136px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .row {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 5px;
 }
 
