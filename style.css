@@ -28,6 +28,8 @@ body {
   background-color: #e0e0e0;
 }
 
+.incorrect { background-color: #f44336; color: white; }
+
 .correct { background-color: #4caf50; color: white; }
 .higher { background-color: #ffeb3b; }
 .lower { background-color: #f44336; color: white; }
