@@ -104,7 +104,7 @@ function updateSuggestions() {
   li.className = "suggestion-item";
 
   const img = document.createElement("img");
-  img.src = survivor.image;
+  img.src = "assets/image/" + survivor.image;
   img.alt = survivor.name;
   img.className = "suggestion-image";
 
