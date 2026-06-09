@@ -1,7 +1,7 @@
 [
   {
     "name": "John Daybreak",
-    "category": "Stealth",
+    "class": "Stealth",
     "speed": 5,
     "stamina": 7,
     "stealth": 6,
@@ -13,7 +13,7 @@
   },
   {
     "name": "Jane Daybreak",
-    "category": "Looper",
+    "class": "Looper",
     "speed": 10,
     "stamina": 10,
     "stealth": 6,
@@ -25,7 +25,7 @@
   },
   {
     "name": "Adriana Penn",
-    "category": "Stealth",
+    "class": "Stealth",
     "speed": 8,
     "stamina": 6,
     "stealth": 9,
