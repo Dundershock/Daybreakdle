@@ -1,0 +1,24 @@
+[
+  {
+    "name": "John Daybreak",
+    "speed": 5,
+    "stamina": 7,
+    "stealth": 6,
+    "composure": 3,
+    "repair": 4,
+    "healing": 6,
+    "skill": 8,
+    "technique": 5
+  },
+  {
+    "name": "Jane Daybreak",
+    "speed": 10,
+    "stamina": 10,
+    "stealth": 6,
+    "composure": 3,
+    "repair": 8,
+    "healing": 2,
+    "skill": 1,
+    "technique": 1
+  }
+]
