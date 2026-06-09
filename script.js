@@ -68,6 +68,13 @@ function createHeader() {
     header.appendChild(cell);
   });
 
+  categories.forEach((cat) => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.textContent = cat;
+    header.appendChild(cell);
+  });
+
   board.appendChild(header);
 }
 
@@ -147,7 +154,7 @@ function checkGuess(guessName) {
     } else {
       cell.classList.add("incorrect");
       cell.textContent = guessedValue + " ✗";
-      allCorrect = false; // still counts towards win
+      allCorrect = false;
     }
   
     row.appendChild(cell);
