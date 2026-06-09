@@ -2,14 +2,14 @@ let survivors = [];
 let targetSurvivor = null;
 
 const stats = [
-  "strength",
   "speed",
   "stamina",
-  "luck",
-  "defense",
-  "agility",
-  "intelligence",
-  "charisma"
+  "stealth",
+  "composure",
+  "repair",
+  "healing",
+  "skill",
+  "technique"
 ];
 
 async function loadData() {
