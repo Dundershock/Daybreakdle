@@ -25,6 +25,7 @@ body {
   font-weight:bold;
   width: 100px;
   color: black;
+  cursor: pointer;
 }
 
 #board {
