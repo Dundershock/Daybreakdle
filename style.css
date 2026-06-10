@@ -1,4 +1,4 @@
-body {
+#page {
   font-family: 'Oswald', sans-serif;
   text-align: center;
   color: white;
@@ -15,7 +15,7 @@ body {
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-body.loaded {
+#page.loaded {
   opacity: 1;
   transform: translateY(0);
 }
