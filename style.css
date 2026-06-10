@@ -151,7 +151,7 @@ button:active {
 }
 
 .incorrect { border-bottom: solid 3px  #f44336; }
-.correct { border-bottom: solid 3px  #4caf50; }
+.correct { border-bottom: solid 3px  #4caf50;  color: #66e162; font-weight: bold; }
 .higher { border-bottom: solid 3px #ffeb3b; }
 .lower { border-bottom: solid 3px #ff685d; }
 
@@ -168,6 +168,7 @@ button:active {
 }
 
 .new-row .cell {
+  text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
   opacity: 0;
   animation: fadeInRow 0.5s ease forwards;
 }
