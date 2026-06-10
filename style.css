@@ -180,7 +180,7 @@ button:active {
 .incorrect { border-bottom: solid 3px  #ff5c50; }
 .correct { border-bottom: solid 3px  #4caf50;  color: #66e162; }
 .higher { border-bottom: solid 3px #ed6a0b; }
-.lower { border-bottom: solid 3px #fa791b; }
+.lower { border-bottom: solid 3px #be2727; }
 
 @keyframes fadeInRow {
   from {
