@@ -229,10 +229,11 @@ function checkGuess(guessName) {
     gameOver = true;
 
     setTimeout(() => {
-      alert(
-        `🎉 Correct! The survivor was ${targetSurvivor.name}! You got it in ${guessCount} guesses.`
-      );
-    }, 100);
+      document.getElementById("win-text").innerHTML =
+        `The survivor was <b>${targetSurvivor.name}</b><br><br>You got it in <b>${guessCount}</b> guesses!`;
+    
+      document.getElementById("win-screen").classList.remove("hidden");
+    }, 1350);
   }
 }
 
@@ -251,6 +252,10 @@ function submitGuess() {
   input.value = "";
 
   clearSuggestions();
+}
+
+function closeWinScreen() {
+  document.getElementById("win-screen").classList.add("hidden");
 }
 
 document
