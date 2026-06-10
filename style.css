@@ -40,18 +40,16 @@ body {
   height: 23px;
   color: black;
   cursor: pointer;
-}
-
-button {
   transition: 150ms ease-in;
 }
 
-button:hover {
+#guess-btn:hover {
   transform: scale(1.025)
 }
 
-button:active {
-  transform: scale(1);
+#guess-btn:active {
+  transform: scale(0.975);
+  filter: brightness(1.5);
   transition: 50ms;
 }
 
@@ -121,7 +119,7 @@ button:active {
   height: 100%;
   object-position: 50% 100%;
   z-index: -1;
-  opacity: 0.8;
+  opacity: 0.9;
   mask-image: linear-gradient(90deg, #fff, transparent)
 }
 
@@ -266,23 +264,39 @@ button:active {
   margin: 0 0 10px 0;
 }
 
-.win-screen-content button {
-  position: absolute;
-  bottom: -50px; left: 41.5%;
+.hidden {
+  display: none;
+}
+
+.win-screen-content button,
+#mode-selector button {
   background: linear-gradient(transparent -30%, #000000c4);
   border: 0; border-radius: 0;
   border-bottom: 2px solid white;
-  margin-top: 12px;
   padding: 8px 14px;
   color: white;
   font-weight: bold;
   text-transform: uppercase;
   font-family: 'Oswald', sans-serif;
   cursor: pointer;
+  transition: 150ms ease-in;
 }
 
-.hidden {
-  display: none;
+.win-screen-content button {
+  position: absolute;
+  bottom: -50px; left: 41.5%;
+  margin-top: 12px;
+}
+
+#mode-selector button {
+  margin-bottom: 5px;
+}
+
+.win-screen-content button:hover,
+#mode-selector button:hover {
+  transform: scaleX(1.025);
+  border-bottom-color: #EFB645;
+  color: #EFB645;
 }
 
 .footer {
