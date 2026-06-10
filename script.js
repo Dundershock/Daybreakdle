@@ -230,7 +230,7 @@ function checkGuess(guessName) {
 
     setTimeout(() => {
       document.getElementById("win-text").innerHTML =
-        `The survivor was <b>${targetSurvivor.name}</b><br><br>You got it in <b>${guessCount}</b> guesses!`;
+        `The survivor was <b>${targetSurvivor.name}</b>.<br><br>You got it in <b>${guessCount}</b> guesses!`;
     
       document.getElementById("win-screen").classList.remove("hidden");
     }, 1350);
