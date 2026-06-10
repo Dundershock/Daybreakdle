@@ -35,7 +35,8 @@ body {
   font-family: Oswald;
   text-transform: uppercase;
   font-weight:bold;
-  width: 100px;
+  width: 130px;
+  height: 23px;
   color: black;
   cursor: pointer;
 }
