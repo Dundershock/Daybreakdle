@@ -129,7 +129,7 @@ function updateDailyUI() {
     localStorage.getItem(getDailyKey()) === "completed";
 
   const autocomplete =
-    document.getElementById("autocomplete-container");
+    document.querySelector(".autocomplete-container")
 
   const guessBtn =
     document.getElementById("guess-btn");
