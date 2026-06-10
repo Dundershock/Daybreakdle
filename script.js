@@ -302,4 +302,9 @@ document
     setTimeout(clearSuggestions, 150);
   });
 
+/* Page load animation */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
+
 loadData();
