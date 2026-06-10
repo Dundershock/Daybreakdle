@@ -69,9 +69,8 @@ body {
 }
 
 .current-mode {
-  border-bottom-color: #EFB645;
-  color: #EFB645;
-  font-weight: bold;
+  border-bottom-color: #EFB645 !important;
+  color: #EFB645 !important;
 }
 
 .row {
