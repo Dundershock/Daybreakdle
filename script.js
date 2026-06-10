@@ -43,29 +43,33 @@ const columns = [
 const guessedNames = new Set();
 
 function getDailySurvivor() {
+  const startDate = new Date(Date.UTC(2025, 0, 1));
   const today = new Date();
 
-  const dateString =
-    `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
+  const currentUTC = new Date(
+    Date.UTC(
+      today.getUTCFullYear(),
+      today.getUTCMonth(),
+      today.getUTCDate()
+    )
+  );
 
-  let hash = 0;
+  const daysSinceStart = Math.floor(
+    (currentUTC - startDate) / (1000 * 60 * 60 * 24)
+  );
 
-  for (let i = 0; i < dateString.length; i++) {
-    hash += dateString.charCodeAt(i);
-  }
-
-  return survivors[hash % survivors.length];
+  return survivors[daysSinceStart % survivors.length];
 }
 
 function getDailyKey() {
   const today = new Date();
 
   return `daybreakdle-${
-    today.getFullYear()
+    today.getUTCFullYear()
   }-${
-    today.getMonth() + 1
+    today.getUTCMonth() + 1
   }-${
-    today.getDate()
+    today.getUTCDate()
   }`;
 }
 
@@ -169,13 +173,23 @@ function updateSuggestions() {
 
   if (!input) return;
 
-  const matches = survivors.filter(
-    survivor =>
-      survivor.name.toLowerCase().includes(input) &&
-      !guessedNames.has(
-        survivor.name.toLowerCase()
-      )
-  );
+  const matches = survivors
+    .filter(
+      survivor =>
+        survivor.name.toLowerCase().includes(input) &&
+        !guessedNames.has(
+          survivor.name.toLowerCase()
+        )
+    )
+    .sort((a, b) => {
+      const aStarts =
+        a.name.toLowerCase().startsWith(input);
+  
+      const bStarts =
+        b.name.toLowerCase().startsWith(input);
+  
+      return bStarts - aStarts;
+    });
 
   matches.forEach((survivor) => {
   const li = document.createElement("li");
