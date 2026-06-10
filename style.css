@@ -81,6 +81,7 @@ button:active {
   font-size: 14px;
 }
 
+/* Table headers */
 .row:first-child .cell {
   font-weight: bold;
   background: #e0e0e0;
@@ -91,9 +92,11 @@ button:active {
   border-radius: 2px;
 }
 
+/* Name cells*/
 .cell:first-child {
   padding: 10px 5px;
   width: 126px;
+  overflow: hidden;
 }
 
 .cell img {
@@ -101,6 +104,18 @@ button:active {
   height: 20px;
   object-fit: cover;
   margin-right: 2px;
+}
+
+/* Survivor portrait mask fade so cool wow */
+.new-row .cell:first-child img {
+  position: absolute;
+  left: 0;
+  width: 60px;
+  height: 50px;
+  object-position: 50% 100%;
+  z-index: -1;
+  opacity: 0.8;
+  mask-image: linear-gradient(90deg, #fff, transparent)
 }
 
 .autocomplete-container {
