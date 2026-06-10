@@ -77,6 +77,84 @@ function getDailyGuessesKey() {
   return getDailyKey() + "-guesses";
 }
 
+function updateModeButtons() {
+  const dailyBtn = document.getElementById("daily-btn");
+  const freeplayBtn = document.getElementById("freeplay-btn");
+
+  dailyBtn.classList.remove("current-mode");
+  freeplayBtn.classList.remove("current-mode");
+
+  if (gameMode === "daily") {
+    dailyBtn.classList.add("current-mode");
+  } else {
+    freeplayBtn.classList.add("current-mode");
+  }
+}
+
+function clearBoard() {
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+  createHeader();
+}
+
+function restoreDailyGame() {
+  const savedGuesses =
+    JSON.parse(localStorage.getItem(getDailyGuessesKey())) || [];
+
+  guessCount = savedGuesses.length;
+
+  savedGuesses.forEach(name => {
+    checkGuess(name, true);
+  });
+
+  if (localStorage.getItem(getDailyKey()) === "completed") {
+    gameOver = true;
+  }
+}
+
+function setNewFreeplaySurvivor() {
+  targetSurvivor =
+    survivors[Math.floor(Math.random() * survivors.length)];
+}
+
+function switchMode(mode) {
+  if (gameMode === mode && mode === "freeplay") {
+    // always reshuffle freeplay even if already selected
+    mode = "freeplay";
+  }
+
+  const board = document.getElementById("board");
+  board.classList.add("switching");
+
+  setTimeout(() => {
+    gameMode = mode;
+    localStorage.setItem("gameMode", mode);
+
+    gameOver = false;
+    guessCount = 0;
+
+    guessedNames.clear();
+
+    clearBoard();
+    clearSuggestions();
+
+    document.getElementById("guess-input").value = "";
+
+    if (mode === "daily") {
+      targetSurvivor = getDailySurvivor();
+      restoreDailyGame();
+    } else {
+      setNewFreeplaySurvivor();
+    }
+
+    updateModeButtons();
+
+    board.classList.remove("switching");
+
+    console.log("New target:", targetSurvivor.name);
+  }, 300);
+}
+
 function pickTargetSurvivor() {
   if (gameMode === "daily") {
     return getDailySurvivor();
@@ -414,27 +492,15 @@ document
   });
 
 /* Mode buttons */
-document
-  .getElementById("daily-btn")
-  .addEventListener("click", () => {
-    localStorage.setItem("gameMode", "daily");
-    location.reload();
-  });
+document.getElementById("daily-btn").addEventListener("click", () => {
+  switchMode("daily");
+});
 
-document
-  .getElementById("freeplay-btn")
-  .addEventListener("click", () => {
-    localStorage.setItem("gameMode", "freeplay");
-    location.reload();
-  });
+document.getElementById("freeplay-btn").addEventListener("click", () => {
+  switchMode("freeplay");
+});
 
-if (gameMode === "daily") {
-  document.getElementById("daily-btn")
-    .classList.add("active-mode");
-} else {
-  document.getElementById("freeplay-btn")
-    .classList.add("active-mode");
-}
+updateModeButtons();
 
 /* Page load animation */
 window.addEventListener("load", () => {
