@@ -227,7 +227,6 @@ body {
   position: fixed;
   bottom: 5px;
   right: 10px;
-  cursor: pointer;
   
   display: flex;
   flex-direction: row-reverse;
@@ -238,6 +237,7 @@ body {
 .footer img {
   width: 50px;
   transition: 250ms cubic-bezier(.4,0,.21,2.09);
+  cursor: pointer;
 }
 .footer img:hover {
   filter: drop-shadow(0 0 8px #ffffff5e);
