@@ -103,7 +103,7 @@ async function loadData() {
           localStorage.getItem(getDailyGuessesKey())
         ) || [];
     
-      guessCount = savedGuesses.length; 
+      guessCount = savedGuesses.length;
     
       savedGuesses.forEach(name => {
         checkGuess(name, true);
@@ -112,13 +112,6 @@ async function loadData() {
     
     if (gameMode === "daily" && localStorage.getItem(getDailyKey()) === "completed") {
       gameOver = true;
-    
-      document.getElementById("win-text").innerHTML =
-        "You've already completed today's Daybreakdle!";
-    
-      document.getElementById("win-screen")
-        .classList.remove("hidden");
-    
       return;
     }
     console.log("Target Survivor:", targetSurvivor.name);
@@ -300,7 +293,7 @@ function checkGuess(guessName, isRestoring = false) {
   guessedNames.add(guess.name.toLowerCase());
   if (!isRestoring) {guessCount++;}
 
-  if (gameMode === "daily") {
+  if (gameMode === "daily" && !isRestoring) {
     const savedGuesses =
       JSON.parse(
         localStorage.getItem(getDailyGuessesKey())
@@ -337,7 +330,7 @@ function checkGuess(guessName, isRestoring = false) {
   
   updateSuggestions();
 
-  if (allCorrect) {
+  if (allCorrect && !isRestoring) {
     gameOver = true;
 
     if (gameMode === "daily") {
