@@ -229,11 +229,24 @@ body {
   right: 10px;
   
   display: flex;
-  flex-direction: row-reverse;
-  align-items: baseline;
-  color: #3b3b3b;
+  flex-direction: row;
+  align-items: end;
+  gap: 7px;
+  color: #636363;
   font-size: 15px;
 }
+
+.footer div {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  padding-bottom: 5px;
+}
+
+.footer div a {
+  color: #00497e
+}
+
 .footer img {
   width: 50px;
   transition: 250ms cubic-bezier(.4,0,.21,2.09);
