@@ -108,8 +108,12 @@ button:active {
   margin-right: 2px;
 }
 
+.row:not(:first-child) {
+  text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
+}
+
 /* Survivor portrait mask fade so cool wow */
-.new-row .cell:first-child img {
+.row:not(:first-child) .cell:first-child img {
   position: absolute;
   left: 0;
   width: 60px;
@@ -208,7 +212,6 @@ button:active {
 }
 
 .new-row .cell {
-  text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
   opacity: 0;
   animation: fadeInRow 0.5s ease forwards;
 }
