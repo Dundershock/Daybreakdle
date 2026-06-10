@@ -6,6 +6,21 @@ let guessCount = 0;
 const revealSound = new Audio("assets/sounds/Reveal.mp3");
 const guessSound = new Audio("assets/sounds/LockIn.mp3");
 
+function randomizeBackground() {
+  const backgrounds = [
+    "assets/backgrounds/ClearwaterBG.jpg",
+    "assets/backgrounds/CostaBG.jpg",
+    "assets/backgrounds/GaikharaBG.jpg",
+    "assets/backgrounds/EmpireBG.jpg",
+    "assets/backgrounds/DawnwoodBG.jpg"
+  ];
+
+  const randomBg =
+    backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+  document.body.style.backgroundImage = `url("${randomBg}")`;
+}
+
 const stats = [
   "speed",
   "stamina",
@@ -245,7 +260,7 @@ function checkGuess(guessName) {
 
     setTimeout(() => {
       document.getElementById("win-text").innerHTML =
-        `The survivor was <b>${targetSurvivor.name}</b>.<br><br>You got it in <b>${guessCount}</b> guesses!!`;
+        `The survivor was <b>${targetSurvivor.name}</b>.<br>You got it in <b>${guessCount}</b> guesses!!`;
     
       document.getElementById("win-screen").classList.remove("hidden");
     }, 1350);
