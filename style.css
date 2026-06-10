@@ -28,6 +28,15 @@ body {
   cursor: pointer;
 }
 
+#guess-btn:hover {
+  transform: scale(1.025)
+}
+
+#guess-btn:active {
+  transform: scale(1);
+  transition: 50ms;
+}
+
 #board {
   margin: auto;
   margin-top: 20px;
