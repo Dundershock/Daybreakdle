@@ -3,6 +3,9 @@ let targetSurvivor = null;
 let gameOver = false;
 let guessCount = 0;
 
+const revealSound = new Audio("assets/sounds/Reveal.mp3");
+const guessSound = new Audio("assets/sounds/LockIn.mp3");
+
 const stats = [
   "speed",
   "stamina",
@@ -223,6 +226,17 @@ function checkGuess(guessName) {
     board.appendChild(row);
   }
 
+  const revealDelays = [
+    0, 150, 300, 450, 600,
+    750, 900, 1050, 1200, 1350
+  ];
+  
+  revealDelays.forEach(delay => {
+    setTimeout(() => {
+      revealSound.cloneNode().play();
+    }, delay);
+  });
+  
   updateSuggestions();
 
   if (allCorrect) {
@@ -239,6 +253,9 @@ function checkGuess(guessName) {
 
 function submitGuess() {
   if (gameOver) return;
+
+  guessSound.currentTime = 0;
+  guessSound.play();
 
   const input =
     document.getElementById("guess-input");
