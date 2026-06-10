@@ -74,6 +74,7 @@ button:active {
   background: #e0e0e0;
   color: #242424;
   text-transform: uppercase;
+  padding: 3px 2px;
   border: 0;
   border-radius: 2px;
 }
@@ -260,7 +261,12 @@ button:active {
 }
 
 .footer div a {
-  color: #00497e
+  color: #00497e;
+  transition: 150ms;
+}
+
+.footer div a:hover {
+  color: #0065be;
 }
 
 .footer img {
