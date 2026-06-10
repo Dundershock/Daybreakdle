@@ -1,6 +1,7 @@
 let survivors = [];
 let targetSurvivor = null;
 let gameOver = false;
+let guessCount = 0;
 
 const stats = [
   "speed",
@@ -143,11 +144,7 @@ function checkGuess(guessName) {
   }
 
   // Silently ignore duplicate guesses
-  if (
-    guessedNames.has(
-      guess.name.toLowerCase()
-    )
-  ) {
+  if (guessedNames.has(guess.name.toLowerCase())) {
     return;
   }
 
@@ -216,7 +213,8 @@ function checkGuess(guessName) {
   guessedNames.add(
     guess.name.toLowerCase()
   );
-
+  guessCount++;
+  
   const header = board.firstElementChild;
 
   if (header && header.nextSibling) {
@@ -232,7 +230,7 @@ function checkGuess(guessName) {
 
     setTimeout(() => {
       alert(
-        `🎉 Correct! The survivor was ${targetSurvivor.name}!`
+        `🎉 Correct! The survivor was ${targetSurvivor.name}! You got it in ${guessCount} guesses.`
       );
     }, 100);
   }
