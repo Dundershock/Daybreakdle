@@ -304,7 +304,7 @@ document
 
 /* Page load animation */
 window.addEventListener("load", () => {
-  document.body.classList.add("loaded");
+  document.getElementById("page").classList.add("loaded");
 });
 
 loadData();
