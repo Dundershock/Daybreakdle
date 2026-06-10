@@ -96,6 +96,7 @@ button:active {
 
 /* Name cells*/
 .cell:first-child {
+  position: relative;
   padding: 10px 5px;
   width: 126px;
   overflow: hidden;
