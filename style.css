@@ -2,6 +2,7 @@ body {
   font-family: 'Oswald', sans-serif;
   text-align: center;
   color: white;
+  font-size: 17px;
   margin: 20px 10px;
   background-image: url('assets/images/ClearwaterBackground.jpg');
   background-size: cover;
