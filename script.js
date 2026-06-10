@@ -146,8 +146,9 @@ function checkGuess(guessName) {
     return;
   }
 
-  // Silently ignore duplicate guesses
+  // Ignore duplicate guesses
   if (guessedNames.has(guess.name.toLowerCase())) {
+    alert("you already guessed that survivor bruh");
     return;
   }
 
