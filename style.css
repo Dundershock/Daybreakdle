@@ -139,12 +139,11 @@ button:active {
 
 #suggestions {
   position: absolute;
-  top: 105%;
-  left: 0;
-  right: 0;
+  top: 105%; left: 0; right: 0;
 
-  background: #2c2c2c;
+  background: #131313f7;
   color: white;
+  border-radius: 10px;
 
   list-style: none;
   margin: 0;
@@ -161,12 +160,13 @@ button:active {
   gap: 5px;
   align-items: center;
   padding: 4px;
+  border-radius: 8px;
   cursor: pointer;
   text-align: left;
 }
 
 #suggestions li:hover {
-  background: #424242;
+  background: #383838e6;
 }
 
 #suggestions li .suggestion-image {
@@ -177,6 +177,17 @@ button:active {
   border: 1px solid #5d5d5d;
 }
 
+/* Suggestions scrollbar styling */
+#suggestions { 
+  scrollbar-width: thin;
+  scrollbar-color: #666 transparent;
+}
+#suggestions::-webkit-scrollbar { width:8px }
+#suggestions::-webkit-scrollbar-track { background:transparent }
+#suggestions::-webkit-scrollbar-thumb { background:#666; border-radius:10px }
+#suggestions::-webkit-scrollbar-button { display:none }
+
+/* Guess colors */
 .incorrect { border-bottom: solid 3px  #ff5c50; }
 .correct { border-bottom: solid 3px  #4caf50;  color: #66e162; }
 .higher { border-bottom: solid 3px #ed6a0b; }
