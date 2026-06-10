@@ -74,10 +74,12 @@ body {
   color: white;
   width: 100%;
   box-sizing: border-box;
-  background: linear-gradient(transparent, #0000001f);
+  background: linear-gradient(transparent, #000000a6);
   height: 30px;
+  padding: 2px 5px;
   border: none;
   border-bottom: 2px solid #FD4040;
+  border-radius: none;
 }
 
 #suggestions {
@@ -101,7 +103,7 @@ body {
 
 #suggestions li {
   display: flex;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
   padding: 4px;
   cursor: pointer;
@@ -113,10 +115,11 @@ body {
 }
 
 #suggestions li .suggestion-image {
-    width: 34px;
-    height: 34px;
-    object-fit: cover;
-    border-radius: 4px;
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #5d5d5d;
 }
 
 .incorrect { border-bottom: solid 3px  #f44336; }
