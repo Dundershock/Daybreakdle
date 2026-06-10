@@ -322,4 +322,5 @@ window.addEventListener("load", () => {
   document.getElementById("page").classList.add("loaded");
 });
 
+randomizeBackground();
 loadData();
