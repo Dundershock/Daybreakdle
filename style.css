@@ -111,7 +111,7 @@ button:active {
   position: absolute;
   left: 0;
   width: 60px;
-  height: 50px;
+  height: 100%;
   object-position: 50% 100%;
   z-index: -1;
   opacity: 0.8;
@@ -177,10 +177,10 @@ button:active {
   border: 1px solid #5d5d5d;
 }
 
-.incorrect { border-bottom: solid 3px  #f44336; }
+.incorrect { border-bottom: solid 3px  #ff5c50; }
 .correct { border-bottom: solid 3px  #4caf50;  color: #66e162; }
-.higher { border-bottom: solid 3px #ffeb3b; }
-.lower { border-bottom: solid 3px #ff685d; }
+.higher { border-bottom: solid 3px #ed6a0b; }
+.lower { border-bottom: solid 3px #fa791b; }
 
 @keyframes fadeInRow {
   from {
