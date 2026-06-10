@@ -16,6 +16,17 @@ body {
   width: 100%;
 }
 
+#guess-btn {
+  background: #FD4040;
+  border-radius: 15px;
+  border: none;
+  font-family: Oswald;
+  text-transform: uppercase;
+  font-weight:bold;
+  width: 100px;
+  color: black;
+}
+
 #board {
   margin: auto;
   margin-top: 20px;
