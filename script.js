@@ -156,9 +156,20 @@ function checkGuess(guessName) {
   row.className = "row";
   row.classList.add("new-row");
 
+  // Names with faces
   const nameCell = document.createElement("div");
-  nameCell.className = "cell";
-  nameCell.textContent = guess.name;
+  nameCell.className = "cell name-cell";
+  
+  const portrait = document.createElement("img");
+  portrait.src = "assets/faces/" + guess.image;
+  portrait.alt = guess.name;
+  
+  const nameText = document.createElement("span");
+  nameText.textContent = guess.name;
+  
+  nameCell.appendChild(portrait);
+  nameCell.appendChild(nameText);
+  
   row.appendChild(nameCell);
 
   let allCorrect = true;
@@ -184,12 +195,17 @@ function checkGuess(guessName) {
         allCorrect = false;
       }
     } else {
+      const classImg = document.createElement("img");
+      classImg.src = `assets/classes/${formatLabel(guessValue)}.png`;
+    
       if (guessValue === targetValue) {
         cell.classList.add("correct");
-        cell.textContent = `${formatLabel(guessValue)} ✓`;
+        cell.appendChild(classImg);
+        cell.appendChild(document.createTextNode(` ${formatLabel(guessValue)} ✓`));
       } else {
         cell.classList.add("incorrect");
-        cell.textContent = `${formatLabel(guessValue)} ✗`;
+        cell.appendChild(classImg);
+        cell.appendChild(document.createTextNode(` ${formatLabel(guessValue)} ✗`));
         allCorrect = false;
       }
     }
