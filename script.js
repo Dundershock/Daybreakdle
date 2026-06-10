@@ -6,6 +6,7 @@ let gameMode = localStorage.getItem("gameMode") || "daily";
 
 const revealSound = new Audio("assets/sounds/Reveal.mp3");
 const guessSound = new Audio("assets/sounds/LockIn.mp3");
+const winSound = new Audio("assets/sounds/WinSound.mp3");
 
 function randomizeBackground() {
   const backgrounds = [
@@ -123,6 +124,25 @@ function updateDailyTimer() {
     `Next survivor in ${hours}h ${minutes}m ${seconds}s`;
 }
 
+function updateDailyUI() {
+  const completed =
+    localStorage.getItem(getDailyKey()) === "completed";
+
+  const autocomplete =
+    document.getElementById("autocomplete-container");
+
+  const guessBtn =
+    document.getElementById("guess-btn");
+
+  if (gameMode === "daily" && completed) {
+    autocomplete.classList.add("hidden");
+    guessBtn.classList.add("hidden");
+  } else {
+    autocomplete.classList.remove("hidden");
+    guessBtn.classList.remove("hidden");
+  }
+}
+
 function clearBoard() {
   const board = document.getElementById("board");
   board.innerHTML = "";
@@ -164,6 +184,7 @@ function restoreDailyGame() {
   }
 
   updateDailyResult();
+  updateDailyUI();
 }
 
 function setNewFreeplaySurvivor() {
@@ -203,6 +224,7 @@ function switchMode(mode) {
     
     updateDailyTimer();
     updateDailyResult();
+    updateDailyUI();
 
     updateModeButtons();
 
@@ -474,17 +496,21 @@ function checkGuess(guessName, isRestoring = false) {
 
   if (allCorrect && !isRestoring) {
     gameOver = true;
-
-    if (gameMode === "daily") {
-      localStorage.setItem(getDailyKey(), "completed");
-      updateDailyResult();
-    }
     
     setTimeout(() => {
-      document.getElementById("win-text").innerHTML =
-        `The survivor was <b>${targetSurvivor.name}</b>.<br>You got it in <b>${guessCount}</b> guesses!!`;
+       if (gameMode === "daily") {
+        localStorage.setItem(getDailyKey(), "completed");
+        updateDailyResult();
+        updateDailyUI();
+    }
+        
+    winSound.currentTime = 0;
+    winSound.play();
+
+    document.getElementById("win-text").innerHTML =
+      `The survivor was <b>${targetSurvivor.name}</b>.<br>You got it in <b>${guessCount}</b> guesses!!`;
     
-      document.getElementById("win-screen").classList.remove("hidden");
+    document.getElementById("win-screen").classList.remove("hidden");
     }, 1350);
   }
 }
