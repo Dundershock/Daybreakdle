@@ -1,15 +1,18 @@
+body { 
+  background-image: url('assets/images/ClearwaterBG.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+}
+
 #page {
   font-family: 'Oswald', sans-serif;
   text-align: center;
   color: white;
   font-size: 17px;
   margin: 20px 10px;
-  background-image: url('assets/images/ClearwaterBG.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
- 
+  
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.4s ease, transform 0.4s ease;
