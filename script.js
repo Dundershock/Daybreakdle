@@ -9,10 +9,10 @@ const guessSound = new Audio("assets/sounds/LockIn.mp3");
 function randomizeBackground() {
   const backgrounds = [
     "assets/images/ClearwaterBG.jpg",
-    "assets/images/CostaBG.jpg",
-    "assets/images/GaikharaBG.jpg",
-    "assets/images/EmpireBG.jpg",
-    "assets/images/DawnwoodBG.jpg"
+    "assets/images/CostaBG.webp",
+    "assets/images/GaikharaBG.webp",
+    "assets/images/EmpireBG.webp",
+    "assets/images/DawnwoodBG.webp"
   ];
 
   const randomBg =
