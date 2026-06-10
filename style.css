@@ -260,6 +260,7 @@ button:active {
   align-items: end;
   gap: 7px;
   color: #636363;
+  font-family: 'Oswald', sans-serif;
   font-size: 15px;
 }
 
