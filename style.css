@@ -169,12 +169,13 @@ body {
 }
 
 .win-screen-content {
-  background: #fff;
+  background: linear-gradient(transparent -30%, #000000c4);
   padding: 24px;
-  border-radius: 12px;
+  border-bottom: 3px solid white;
   text-align: center;
   font-family: 'Oswald', sans-serif;
-  min-width: 260px;
+  min-width: 360px;
+  color: white;
 }
 
 .win-screen-content h2 {
@@ -182,8 +183,16 @@ body {
 }
 
 .win-screen-content button {
+  background: linear-gradient(transparent -30%, #000000c4);
+  border: 0; border-radius: 0;
+  border-bottom: 2px solid white;
   margin-top: 12px;
   padding: 8px 14px;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: 'Oswald', sans-serif;
+  transform: translateY(75px);
   cursor: pointer;
 }
 
