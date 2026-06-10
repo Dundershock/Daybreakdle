@@ -91,10 +91,62 @@ function updateModeButtons() {
   }
 }
 
+function updateDailyTimer() {
+  const timerEl = document.getElementById("daily-timer");
+
+  if (gameMode !== "daily") {
+    timerEl.textContent = "";
+    return;
+  }
+
+  const now = new Date();
+
+  const nextUTC = new Date(
+    Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() + 1
+    )
+  );
+
+  const diff = nextUTC - now;
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor(
+    (diff % (1000 * 60 * 60)) / (1000 * 60)
+  );
+  const seconds = Math.floor(
+    (diff % (1000 * 60)) / 1000
+  );
+
+  timerEl.textContent =
+    `Next survivor in ${hours}h ${minutes}m ${seconds}s`;
+}
+
 function clearBoard() {
   const board = document.getElementById("board");
   board.innerHTML = "";
   createHeader();
+}
+
+function updateDailyResult() {
+  const resultEl = document.getElementById("daily-result");
+
+  if (gameMode !== "daily") {
+    resultEl.textContent = "";
+    return;
+  }
+
+  const completed =
+    localStorage.getItem(getDailyKey()) === "completed";
+
+  if (completed) {
+    resultEl.innerHTML =
+      `✅ Solved today's survivor in <b>${guessCount}</b> guesses`;
+  } else {
+    resultEl.textContent =
+      `${guessCount} guess${guessCount === 1 ? "" : "es"} so far`;
+  }
 }
 
 function restoreDailyGame() {
@@ -110,6 +162,8 @@ function restoreDailyGame() {
   if (localStorage.getItem(getDailyKey()) === "completed") {
     gameOver = true;
   }
+
+  updateDailyResult();
 }
 
 function setNewFreeplaySurvivor() {
@@ -146,6 +200,9 @@ function switchMode(mode) {
     } else {
       setNewFreeplaySurvivor();
     }
+    
+    updateDailyTimer();
+    updateDailyResult();
 
     updateModeButtons();
 
@@ -180,16 +237,7 @@ async function loadData() {
     createHeader(); 
     
     if (gameMode === "daily") {
-      const savedGuesses =
-        JSON.parse(
-          localStorage.getItem(getDailyGuessesKey())
-        ) || [];
-    
-      guessCount = savedGuesses.length;
-    
-      savedGuesses.forEach(name => {
-        checkGuess(name, true);
-      });
+      restoreDailyGame();
     }
     
     if (gameMode === "daily" && localStorage.getItem(getDailyKey()) === "completed") {
@@ -397,6 +445,8 @@ function checkGuess(guessName, isRestoring = false) {
       getDailyGuessesKey(),
       JSON.stringify(savedGuesses)
     );
+
+    updateDailyResult();
   }
   
   const header = board.firstElementChild;
@@ -426,11 +476,9 @@ function checkGuess(guessName, isRestoring = false) {
     gameOver = true;
 
     if (gameMode === "daily") {
-      localStorage.setItem(
-        getDailyKey(),
-        "completed"
-      );
-      }
+      localStorage.setItem(getDailyKey(), "completed");
+      updateDailyResult();
+    }
     
     setTimeout(() => {
       document.getElementById("win-text").innerHTML =
@@ -509,3 +557,6 @@ window.addEventListener("load", () => {
 
 randomizeBackground();
 loadData();
+
+setInterval(updateDailyTimer, 1000);
+updateDailyTimer();
