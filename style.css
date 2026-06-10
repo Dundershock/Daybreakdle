@@ -227,13 +227,19 @@ body {
   position: fixed;
   bottom: 5px;
   right: 10px;
-  transition: 250ms cubic-bezier(.4,0,.21,2.09);
   cursor: pointer;
+  
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+  color: #3b3b3b;
+  font-size: 15px;
 }
 .footer img {
   width: 50px;
+  transition: 250ms cubic-bezier(.4,0,.21,2.09);
 }
-.footer:hover {
+.footer img:hover {
   filter: drop-shadow(0 0 8px #ffffff5e);
   transform: rotate(9deg)
 }
