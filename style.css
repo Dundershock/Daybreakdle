@@ -53,6 +53,7 @@ body {
 
 .cell:first-child {
   padding: 10px 5px;
+  width: 126px;
 }
 
 .cell img {
