@@ -1,12 +1,53 @@
+// State
 let survivors = [];
 let targetSurvivor = null;
 let gameOver = false;
 let guessCount = 0;
 let gameMode = localStorage.getItem("gameMode") || "daily";
 
-const revealSound = new Audio("assets/sounds/Reveal.mp3");
-const guessSound = new Audio("assets/sounds/LockIn.mp3");
-const winSound = new Audio("assets/sounds/WinSound.mp3");
+// Audio
+const sounds = {
+  reveal: new Audio("assets/sounds/Reveal.mp3"),
+  guess:  new Audio("assets/sounds/LockIn.mp3"),
+  win:    new Audio("assets/sounds/WinSound.mp3"),
+};
+
+function playSound(name) {
+  if (name === "reveal") {
+    sounds.reveal.cloneNode().play().catch(() => {});
+  } else {
+    sounds[name].currentTime = 0;
+    sounds[name].play().catch(() => {});
+  }
+}
+
+// Schema
+const columns = [
+  { key: "speed",     type: "stat" },
+  { key: "stamina",   type: "stat" },
+  { key: "stealth",   type: "stat" },
+  { key: "composure", type: "stat" },
+  { key: "repair",    type: "stat" },
+  { key: "healing",   type: "stat" },
+  { key: "skill",     type: "stat" },
+  { key: "technique", type: "stat" },
+  { key: "class",     type: "category" },
+];
+
+const guessedNames = new Set();
+
+// Utilities
+function formatLabel(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function normalizeName(name) {
+  return name.toLowerCase().trim();
+}
+
+function findSurvivor(name) {
+  return survivors.find(s => normalizeName(s.name) === normalizeName(name));
+}
 
 function randomizeBackground() {
   const backgrounds = [
@@ -14,273 +55,92 @@ function randomizeBackground() {
     "assets/images/CostaBG.webp",
     "assets/images/GaikharaBG.webp",
     "assets/images/EmpireBG.webp",
-    "assets/images/DawnwoodBG.webp"
+    "assets/images/DawnwoodBG.webp",
   ];
-
-  const randomBg =
-    backgrounds[Math.floor(Math.random() * backgrounds.length)];
-
-  document.body.style.backgroundImage = `url("${randomBg}")`;
+  document.body.style.backgroundImage =
+    `url("${backgrounds[Math.floor(Math.random() * backgrounds.length)]}")`;
 }
 
-const stats = [
-  "speed",
-  "stamina",
-  "stealth",
-  "composure",
-  "repair",
-  "healing",
-  "skill",
-  "technique"
-];
-
-const categories = ["class"];
-
-const columns = [
-  ...stats.map(stat => ({ key: stat, type: "stat" })),
-  ...categories.map(cat => ({ key: cat, type: "category" }))
-];
-
-const guessedNames = new Set();
-
+// Daily helpers
 function getDailySurvivor() {
   const startDate = new Date(Date.UTC(2025, 0, 1));
   const today = new Date();
-
-  const currentUTC = new Date(
-    Date.UTC(
-      today.getUTCFullYear(),
-      today.getUTCMonth(),
-      today.getUTCDate()
-    )
-  );
-
-  const daysSinceStart = Math.floor(
-    (currentUTC - startDate) / (1000 * 60 * 60 * 24)
-  );
-
+  const currentUTC = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()));
+  const daysSinceStart = Math.floor((currentUTC - startDate) / 86_400_000);
   return survivors[daysSinceStart % survivors.length];
 }
 
 function getDailyKey() {
-  const today = new Date();
-
-  return `daybreakdle-${
-    today.getUTCFullYear()
-  }-${
-    today.getUTCMonth() + 1
-  }-${
-    today.getUTCDate()
-  }`;
+  const t = new Date();
+  return `daybreakdle-${t.getUTCFullYear()}-${t.getUTCMonth() + 1}-${t.getUTCDate()}`;
 }
 
 function getDailyGuessesKey() {
-  return getDailyKey() + "-guesses";
+  return `${getDailyKey()}-guesses`;
 }
 
+function isDailyComplete() {
+  return localStorage.getItem(getDailyKey()) === "completed";
+}
+
+function cleanupOldDailyKeys() {
+  const todayKey = getDailyKey();
+  Object.keys(localStorage)
+    .filter(k => k.startsWith("daybreakdle-") && k !== "daybreakdle-stats" && !k.startsWith(todayKey))
+    .forEach(k => localStorage.removeItem(k));
+}
+
+function markDailyComplete() {
+  const today = new Date().toISOString().slice(0, 10);
+  const saved = JSON.parse(localStorage.getItem("daybreakdle-stats")) || { completed: 0, lastCompletedDate: null };
+  if (saved.lastCompletedDate === today) return;
+  saved.completed += 1;
+  saved.lastCompletedDate = today;
+  localStorage.setItem("daybreakdle-stats", JSON.stringify(saved));
+  localStorage.setItem(getDailyKey(), "completed"); // ← the missing line
+}
+
+// UI updates
 function updateModeButtons() {
-  const dailyBtn = document.getElementById("daily-btn");
-  const freeplayBtn = document.getElementById("freeplay-btn");
-
-  dailyBtn.classList.remove("current-mode");
-  freeplayBtn.classList.remove("current-mode");
-
-  if (gameMode === "daily") {
-    dailyBtn.classList.add("current-mode");
-  } else {
-    freeplayBtn.classList.add("current-mode");
-  }
+  document.getElementById("daily-btn").classList.toggle("current-mode", gameMode === "daily");
+  document.getElementById("freeplay-btn").classList.toggle("current-mode", gameMode === "freeplay");
 }
 
 function updateDailyTimer() {
   const timerEl = document.getElementById("daily-timer");
-
-  if (gameMode !== "daily") {
-    timerEl.textContent = "";
-    return;
-  }
-
+  if (gameMode !== "daily") { timerEl.textContent = ""; return; }
   const now = new Date();
-
-  const nextUTC = new Date(
-    Date.UTC(
-      now.getUTCFullYear(),
-      now.getUTCMonth(),
-      now.getUTCDate() + 1
-    )
-  );
-
+  const nextUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1));
   const diff = nextUTC - now;
-
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const minutes = Math.floor(
-    (diff % (1000 * 60 * 60)) / (1000 * 60)
-  );
-  const seconds = Math.floor(
-    (diff % (1000 * 60)) / 1000
-  );
-
-  timerEl.textContent =
-    `Next survivor in ${hours}h ${minutes}m ${seconds}s`;
-}
-
-function updateDailyUI() {
-  const completed =
-    localStorage.getItem(getDailyKey()) === "completed";
-
-  const autocomplete =
-    document.querySelector(".autocomplete-container")
-
-  const guessBtn =
-    document.getElementById("guess-btn");
-
-  if (gameMode === "daily" && completed) {
-    autocomplete.classList.add("hidden");
-    guessBtn.classList.add("hidden");
-  } else {
-    autocomplete.classList.remove("hidden");
-    guessBtn.classList.remove("hidden");
-  }
-}
-
-function clearBoard() {
-  const board = document.getElementById("board");
-  board.innerHTML = "";
-  createHeader();
+  const h = Math.floor(diff / 3_600_000);
+  const m = Math.floor((diff % 3_600_000) / 60_000);
+  const s = Math.floor((diff % 60_000) / 1000);
+  timerEl.textContent = `Next survivor in ${h}h ${m}m ${s}s`;
 }
 
 function updateDailyResult() {
   const resultEl = document.getElementById("daily-result");
-
-  if (gameMode !== "daily") {
-    resultEl.textContent = "";
-    return;
-  }
-
-  const completed =
-    localStorage.getItem(getDailyKey()) === "completed";
-
-  if (completed) {
-    resultEl.innerHTML =
-      `✅ Solved today's survivor in <b>${guessCount}</b> guesses`;
-  } else {
-    resultEl.textContent =
-      `${guessCount} guess${guessCount === 1 ? "" : "es"} so far`;
-  }
+  if (gameMode !== "daily") { resultEl.textContent = ""; return; }
+  const saved = JSON.parse(localStorage.getItem("daybreakdle-stats")) || { completed: 0 };
+  resultEl.innerHTML = `🏆 Daily wins: <b>${saved.completed}</b> | Current guesses: <b>${guessCount}</b>`;
 }
 
-function restoreDailyGame() {
-  const savedGuesses =
-    JSON.parse(localStorage.getItem(getDailyGuessesKey())) || [];
+function updateDailyUI() {
+  const isComplete = gameMode === "daily" && isDailyComplete();
+  document.querySelector(".autocomplete-container").classList.toggle("hidden", isComplete);
+  document.getElementById("guess-btn").classList.toggle("hidden", isComplete);
+}
 
-  guessCount = savedGuesses.length;
-
-  savedGuesses.forEach(name => {
-    checkGuess(name, true);
-  });
-
-  if (localStorage.getItem(getDailyKey()) === "completed") {
-    gameOver = true;
-  }
-
+function updateAllUI() {
+  updateDailyTimer();
   updateDailyResult();
   updateDailyUI();
+  updateModeButtons();
 }
 
-function setNewFreeplaySurvivor() {
-  targetSurvivor =
-    survivors[Math.floor(Math.random() * survivors.length)];
-}
-
-function switchMode(mode) {
-  if (gameMode === mode && mode === "freeplay") {
-    // always reshuffle freeplay even if already selected
-    mode = "freeplay";
-  }
-
-  const board = document.getElementById("board");
-  board.classList.add("switching");
-
-  setTimeout(() => {
-    gameMode = mode;
-    localStorage.setItem("gameMode", mode);
-
-    gameOver = false;
-    guessCount = 0;
-
-    guessedNames.clear();
-
-    clearBoard();
-    clearSuggestions();
-
-    document.getElementById("guess-input").value = "";
-
-    if (mode === "daily") {
-      targetSurvivor = getDailySurvivor();
-      restoreDailyGame();
-    } else {
-      setNewFreeplaySurvivor();
-    }
-    
-    updateDailyTimer();
-    updateDailyResult();
-    updateDailyUI();
-
-    updateModeButtons();
-
-    board.classList.remove("switching");
-
-    console.log("New target:", targetSurvivor.name);
-  }, 300);
-}
-
-function pickTargetSurvivor() {
-  if (gameMode === "daily") {
-    return getDailySurvivor();
-  }
-
-  return survivors[
-    Math.floor(Math.random() * survivors.length)
-  ];
-}
-
-async function loadData() {
-  try {
-    const response = await fetch("survivors.json");
-    survivors = await response.json();
-
-    if (!survivors.length) {
-      throw new Error("No survivors found.");
-    }
-
-    // Daily survivor target
-    targetSurvivor = pickTargetSurvivor();
-
-    createHeader(); 
-    
-    if (gameMode === "daily") {
-      restoreDailyGame();
-    }
-    
-    if (gameMode === "daily" && localStorage.getItem(getDailyKey()) === "completed") {
-      gameOver = true;
-      return;
-    }
-    console.log("Target Survivor:", targetSurvivor.name);
-
-  } catch (error) {
-    console.error(error);
-    alert("Failed to load survivor data.");
-  }
-}
-
-function formatLabel(text) {
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
+// Board
 function createHeader() {
   const board = document.getElementById("board");
-
   const header = document.createElement("div");
   header.className = "row";
 
@@ -299,116 +159,71 @@ function createHeader() {
   board.appendChild(header);
 }
 
-function normalizeName(name) {
-  return name.toLowerCase().trim();
+function clearBoard() {
+  document.getElementById("board").innerHTML = "";
+  createHeader();
 }
 
-function findSurvivor(name) {
-  return survivors.find(
-    survivor =>
-      normalizeName(survivor.name) === normalizeName(name)
-  );
-}
-
+// Autocompleting survivor searches
 function updateSuggestions() {
-  const input =
-    document.getElementById("guess-input").value.toLowerCase();
-
-  const suggestions =
-    document.getElementById("suggestions");
-
+  const input = document.getElementById("guess-input").value.toLowerCase();
+  const suggestions = document.getElementById("suggestions");
   suggestions.innerHTML = "";
-
   if (!input) return;
 
   const matches = survivors
-    .filter(
-      survivor =>
-        survivor.name.toLowerCase().includes(input) &&
-        !guessedNames.has(
-          survivor.name.toLowerCase()
-        )
-    )
-    .sort((a, b) => {
-      const aStarts =
-        a.name.toLowerCase().startsWith(input);
-  
-      const bStarts =
-        b.name.toLowerCase().startsWith(input);
-  
-      return bStarts - aStarts;
+    .filter(s => s.name.toLowerCase().includes(input) && !guessedNames.has(s.name.toLowerCase()))
+    .sort((a, b) => b.name.toLowerCase().startsWith(input) - a.name.toLowerCase().startsWith(input));
+
+  matches.forEach(survivor => {
+    const li = document.createElement("li");
+    li.className = "suggestion-item";
+
+    const img = document.createElement("img");
+    img.src = `assets/faces/${survivor.image}`;
+    img.alt = survivor.name;
+    img.className = "suggestion-image";
+
+    const span = document.createElement("span");
+    span.textContent = survivor.name;
+
+    li.append(img, span);
+    li.addEventListener("click", () => {
+      document.getElementById("guess-input").value = survivor.name;
+      suggestions.innerHTML = "";
     });
-
-  matches.forEach((survivor) => {
-  const li = document.createElement("li");
-  li.className = "suggestion-item";
-
-  const img = document.createElement("img");
-  img.src = "assets/faces/" + survivor.image;
-  img.alt = survivor.name;
-  img.className = "suggestion-image";
-
-  const span = document.createElement("span");
-  span.textContent = survivor.name;
-
-  li.appendChild(img);
-  li.appendChild(span);
-
-  li.addEventListener("click", () => {
-    document.getElementById("guess-input").value =
-      survivor.name;
-
-    suggestions.innerHTML = "";
+    suggestions.appendChild(li);
   });
-
-  suggestions.appendChild(li);
-});
 }
 
 function clearSuggestions() {
-  const suggestions =
-    document.getElementById("suggestions");
-
-  if (suggestions) {
-    suggestions.innerHTML = "";
-  }
+  const suggestions = document.getElementById("suggestions");
+  if (suggestions) suggestions.innerHTML = "";
 }
 
+// Game logic
 function checkGuess(guessName, isRestoring = false) {
   const guess = findSurvivor(guessName);
+  if (!guess) { alert("Survivor not found."); return; }
 
-  if (!guess) {
-    alert("Survivor not found.");
-    return;
-  }
-
-  // Ignore duplicate guesses
-  if (guessedNames.has(guess.name.toLowerCase()) && !isRestoring) {
-    alert("you already guessed that survivor bruh");
+  if (!isRestoring && guessedNames.has(guess.name.toLowerCase())) {
+    alert("You already guessed that survivor!");
     return;
   }
 
   const board = document.getElementById("board");
   const row = document.createElement("div");
-  row.className = "row";
-  if (!isRestoring) {
-    row.classList.add("new-row");
-  }
+  row.className = isRestoring ? "row" : "row new-row";
 
-  // Names with faces
+  // Name cell with portrait
   const nameCell = document.createElement("div");
   nameCell.className = "cell name-cell";
-  
   const portrait = document.createElement("img");
-  portrait.src = "assets/faces/" + guess.image;
+  portrait.src = `assets/faces/${guess.image}`;
   portrait.alt = guess.name;
-  
   const nameText = document.createElement("span");
   nameText.textContent = guess.name;
-  
-  nameCell.appendChild(portrait);
-  nameCell.appendChild(nameText);
-  
+  nameCell.append(portrait, nameText);
   row.appendChild(nameCell);
 
   let allCorrect = true;
@@ -416,7 +231,6 @@ function checkGuess(guessName, isRestoring = false) {
   columns.forEach(({ key, type }) => {
     const guessValue = guess[key];
     const targetValue = targetSurvivor[key];
-
     const cell = document.createElement("div");
     cell.className = "cell";
 
@@ -424,114 +238,73 @@ function checkGuess(guessName, isRestoring = false) {
       if (guessValue === targetValue) {
         cell.classList.add("correct");
         cell.textContent = `${guessValue} ✓`;
-      } else if (guessValue < targetValue) {
-        cell.classList.add("higher");
-        cell.textContent = `${guessValue} ▲`;
-        allCorrect = false;
       } else {
-        cell.classList.add("lower");
-        cell.textContent = `${guessValue} ▼`;
+        const isHigher = guessValue < targetValue;
+        cell.classList.add(isHigher ? "higher" : "lower");
+        cell.textContent = `${guessValue} ${isHigher ? "▲" : "▼"}`;
         allCorrect = false;
       }
     } else {
       const classImg = document.createElement("img");
       classImg.src = `assets/classes/${formatLabel(guessValue)}.png`;
-    
-      if (guessValue === targetValue) {
-        cell.classList.add("correct");
-        cell.appendChild(classImg);
-        cell.appendChild(document.createTextNode(` ${formatLabel(guessValue)} ✓`));
-      } else {
-        cell.classList.add("incorrect");
-        cell.appendChild(classImg);
-        cell.appendChild(document.createTextNode(` ${formatLabel(guessValue)} ✗`));
-        allCorrect = false;
-      }
+      const isCorrect = guessValue === targetValue;
+      cell.classList.add(isCorrect ? "correct" : "incorrect");
+      cell.append(classImg, ` ${formatLabel(guessValue)} ${isCorrect ? "✓" : "✗"}`);
+      if (!isCorrect) allCorrect = false;
     }
 
     row.appendChild(cell);
   });
 
   guessedNames.add(guess.name.toLowerCase());
-  if (!isRestoring) {guessCount++;}
 
-  if (gameMode === "daily" && !isRestoring) {
-    const savedGuesses =
-      JSON.parse(
-        localStorage.getItem(getDailyGuessesKey())
-      ) || [];
-  
-    savedGuesses.push(guess.name);
-  
-    localStorage.setItem(
-      getDailyGuessesKey(),
-      JSON.stringify(savedGuesses)
-    );
-
-    updateDailyResult();
-  }
-  
-  const header = board.firstElementChild;
-
-  if (header && header.nextSibling) {
-    board.insertBefore(row, header.nextSibling);
-  } else {
-    board.appendChild(row);
-  }
-
-  const revealDelays = [
-    0, 150, 300, 450, 600,
-    750, 900, 1050, 1200, 1350
-  ];
-  
   if (!isRestoring) {
-    revealDelays.forEach(delay => {
-      setTimeout(() => {
-        revealSound.cloneNode().play();
-      }, delay);
+    guessCount++;
+
+    if (gameMode === "daily") {
+      const savedGuesses = JSON.parse(localStorage.getItem(getDailyGuessesKey())) || [];
+      savedGuesses.push(guess.name);
+      localStorage.setItem(getDailyGuessesKey(), JSON.stringify(savedGuesses));
+      updateDailyResult();
+    }
+
+    // Staggered reveal sound — one tick per cell (10 cells total: name + 9 columns)
+    [0, 150, 300, 450, 600, 750, 900, 1050, 1200, 1350].forEach(delay => {
+      setTimeout(() => playSound("reveal"), delay);
     });
   }
-  
+
+  // Insert new row immediately after the header
+  board.insertBefore(row, board.firstElementChild.nextSibling);
+
   updateSuggestions();
 
   if (allCorrect && !isRestoring) {
     gameOver = true;
-    
     setTimeout(() => {
-       if (gameMode === "daily") {
-        localStorage.setItem(getDailyKey(), "completed");
+      if (gameMode === "daily") {
+        markDailyComplete();
         updateDailyResult();
         updateDailyUI();
-    }
-        
-    winSound.currentTime = 0;
-    winSound.play();
-
-    document.getElementById("win-text").innerHTML =
-      `The survivor was <b>${targetSurvivor.name}</b>.<br>You got it in <b>${guessCount}</b> guesses!!`;
-    
-    document.getElementById("win-screen").classList.remove("hidden");
+      }
+      playSound("win");
+      // BUG FIX: "1 guesses" → "1 guess"
+      const guessWord = guessCount === 1 ? "guess" : "guesses";
+      document.getElementById("win-text").innerHTML =
+        `The survivor was <b>${targetSurvivor.name}</b>.<br>You got it in <b>${guessCount}</b> ${guessWord}!!`;
+      document.getElementById("win-screen").classList.remove("hidden");
     }, 1350);
   }
 }
 
 function submitGuess() {
   if (gameOver) return;
-
-  guessSound.currentTime = 0;
-  guessSound.play();
-
-  const input =
-    document.getElementById("guess-input");
-
-  const guessName = input.value;
-
-  if (!guessName.trim()) return;
-
+  const input = document.getElementById("guess-input");
+  const guessName = input.value.trim();
+  if (!guessName) return; // check before playing sound
+  playSound("guess");
   checkGuess(guessName);
-
   input.value = "";
-
   clearSuggestions();
 }
 
@@ -539,50 +312,86 @@ function closeWinScreen() {
   document.getElementById("win-screen").classList.add("hidden");
 }
 
-document
-  .getElementById("guess-btn")
-  .addEventListener("click", submitGuess);
+// Mode switching 
+function restoreDailyGame() {
+  const savedGuesses = JSON.parse(localStorage.getItem(getDailyGuessesKey())) || [];
+  guessCount = savedGuesses.length;
+  savedGuesses.forEach(name => checkGuess(name, true));
+  if (isDailyComplete()) gameOver = true;
+  updateDailyResult();
+  updateDailyUI();
+}
 
-document
-  .getElementById("guess-input")
-  .addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      submitGuess();
+function switchMode(mode) {
+  const board = document.getElementById("board");
+  board.classList.add("switching");
+
+  setTimeout(() => {
+    gameMode = mode;
+    localStorage.setItem("gameMode", mode);
+    gameOver = false;
+    guessCount = 0;
+    guessedNames.clear();
+    clearBoard();
+    clearSuggestions();
+    document.getElementById("guess-input").value = "";
+
+    if (mode === "daily") {
+      targetSurvivor = getDailySurvivor();
+      restoreDailyGame();
+    } else {
+      targetSurvivor = survivors[Math.floor(Math.random() * survivors.length)];
     }
-  });
 
-document
-  .getElementById("guess-input")
-  .addEventListener("input", updateSuggestions);
+    updateAllUI();
+    board.classList.remove("switching");
+    console.log("New target:", targetSurvivor?.name);
+  }, 300);
+}
 
-document
-  .getElementById("guess-input")
-  .addEventListener("focus", updateSuggestions);
+// Init
+async function loadData() {
+  try {
+    const response = await fetch("survivors.json");
+    survivors = await response.json();
+    if (!survivors.length) throw new Error("No survivors found.");
 
-document
-  .getElementById("guess-input")
-  .addEventListener("blur", () => {
-    setTimeout(clearSuggestions, 150);
-  });
+    targetSurvivor = gameMode === "daily"
+      ? getDailySurvivor()
+      : survivors[Math.floor(Math.random() * survivors.length)];
 
-/* Mode buttons */
-document.getElementById("daily-btn").addEventListener("click", () => {
-  switchMode("daily");
-});
+    createHeader();
 
-document.getElementById("freeplay-btn").addEventListener("click", () => {
-  switchMode("freeplay");
-});
+    if (gameMode === "daily") {
+      restoreDailyGame();
+      if (isDailyComplete()) { gameOver = true; return; }
+    }
 
-updateModeButtons();
+    console.log("Target Survivor:", targetSurvivor.name);
+  } catch (error) {
+    console.error(error);
+    alert("Failed to load survivor data.");
+  }
+}
 
-/* Page load animation */
-window.addEventListener("load", () => {
-  document.getElementById("page").classList.add("loaded");
-});
+// Event listeners
+document.getElementById("guess-btn").addEventListener("click", submitGuess);
 
+const guessInput = document.getElementById("guess-input");
+guessInput.addEventListener("keydown", e => { if (e.key === "Enter") submitGuess(); });
+guessInput.addEventListener("input", updateSuggestions);
+guessInput.addEventListener("focus", updateSuggestions);
+guessInput.addEventListener("blur", () => setTimeout(clearSuggestions, 150));
+
+document.getElementById("daily-btn").addEventListener("click", () => switchMode("daily"));
+document.getElementById("freeplay-btn").addEventListener("click", () => switchMode("freeplay"));
+
+window.addEventListener("load", () => document.getElementById("page").classList.add("loaded"));
+
+// Startup
 randomizeBackground();
+cleanupOldDailyKeys();
 loadData();
-
+updateModeButtons();
 setInterval(updateDailyTimer, 1000);
 updateDailyTimer();
