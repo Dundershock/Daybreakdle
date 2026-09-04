@@ -1025,5 +1025,31 @@
     "skill": 5,
     "technique": 8,
     "image": "NdinelaoFace.png"
+  },
+  {
+    "name": "Colton Alcindor",
+    "class": "Genrusher",
+    "speed": 6,
+    "stamina": 6,
+    "stealth": 7,
+    "composure": 10,
+    "repair": 8,
+    "healing": 2,
+    "skill": 2,
+    "technique": 10,
+    "image": "ColtonFace.png"
+  },
+  {
+    "name": "Claudia Mejia",
+    "class": "Looper",
+    "speed": 7,
+    "stamina": 6,
+    "stealth": 4,
+    "composure": 2,
+    "repair": 4,
+    "healing": 5,
+    "skill": 4,
+    "technique": 6,
+    "image": "ClaudiaFace.png"
   }
 ]
