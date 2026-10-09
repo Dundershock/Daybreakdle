@@ -182,7 +182,7 @@
     "image": "ChaoxingFace.png"
   },
   {
-    "name": "Taylor Dalton",
+    "name": "Chandra Rai",
     "class": "Genrusher",
     "speed": 6,
     "stamina": 5,
@@ -192,7 +192,7 @@
     "healing": 8,
     "skill": 10,
     "technique": 7,
-    "image": "TaylorFace.png"
+    "image": "ChandraFace.png"
   },
   {
     "name": "Yeona Jeung",
@@ -1051,5 +1051,18 @@
     "skill": 4,
     "technique": 6,
     "image": "ClaudiaFace.png"
+  },
+  {
+    "name": "Daphne Talbot",
+    "class": "Support",
+    "speed": 8,
+    "stamina": 4,
+    "stealth": 5,
+    "composure": 4,
+    "repair": 5,
+    "healing": 7,
+    "skill": 6,
+    "technique": 6,
+    "image": "DaphneFace.png"
   }
 ]
